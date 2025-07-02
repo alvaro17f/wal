@@ -9,4 +9,15 @@
 .wallpaper {
   border: solid 2px darkcyan;
   border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.wallpaper:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.wallpaper:active {
+  cursor: pointer;
+  transform: scale(0.95);
 }

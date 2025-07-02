@@ -11,6 +11,7 @@ export const Wallpapers = () => {
           <img
             key={idx}
             className="wallpaper"
+            onClick={() => console.debug(wallpaper)}
             src={wallpaper}
             alt={`wallpaper_${idx}`}
             height={200}
