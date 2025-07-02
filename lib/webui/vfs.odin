@@ -39,16 +39,19 @@ build_virtual_file_system :: proc(root_dir: string) {
 				break
 			}
 
-			fullpath: string = strings.concatenate({current_dir, "/", entry.name})
+			fullpath: string = strings.concatenate(
+				{current_dir, "/", entry.name},
+				context.temp_allocator,
+			)
 
 			if !entry.is_dir {
-				data, pass := os.read_entire_file_from_filename(fullpath)
+				data, pass := os.read_entire_file_from_filename(fullpath, context.temp_allocator)
 				if !pass {
 					fmt.eprintfln("File did not open: %s", fullpath)
 					break
 				}
 
-				proper_path, _ := strings.remove_all(fullpath, root_dir) // don't include the root directory in the full path
+				proper_path, _ := strings.remove_all(fullpath, root_dir, context.temp_allocator) // don't include the root directory in the full path
 				virtual_files[proper_path] = data
 
 				if strings.contains(entry.name, "index.") {
@@ -56,7 +59,10 @@ build_virtual_file_system :: proc(root_dir: string) {
 				}
 			} else {
 				append(&dir_stack, fullpath) // add directory to stack to loop through
-				append(&index_paths, strings.concatenate({"/", entry.name, "/"})) // add to index_paths/files
+				append(
+					&index_paths,
+					strings.concatenate({"/", entry.name, "/"}, context.temp_allocator),
+				) // add to index_paths/files
 			}
 		}
 	}
@@ -96,13 +102,18 @@ vfs :: proc "c" (path: cstring, length: ^i32) -> rawptr {
 		// new length of packet for both header and file accomidated
 		length^ = header_length + i32(len(file_data))
 
-		file_data_str: string = strings.clone_from_bytes(file_data)
+		file_data_str: string = strings.clone_from_bytes(file_data, context.temp_allocator)
 
 		// Concatenate header_template and file_data to a single string, transmute into a byte array,
 		// get the raw data of the bytearray to have a multipointer and then get the the raw pointer of
 		// the multipointer to return
 		response: rawptr = rawptr(
-			raw_data(transmute([]u8)strings.concatenate({http_header_template, file_data_str})),
+			raw_data(
+				transmute([]u8)strings.concatenate(
+					{http_header_template, file_data_str},
+					context.temp_allocator,
+				),
+			),
 		)
 
 		return response
@@ -112,7 +123,7 @@ vfs :: proc "c" (path: cstring, length: ^i32) -> rawptr {
 		redirect_length: uint = len(redirect_path)
 
 		if redirect_path[redirect_length - 1] != '/' {
-			redirect_path = strings.concatenate({redirect_path, "/"})
+			redirect_path = strings.concatenate({redirect_path, "/"}, context.temp_allocator)
 		}
 
 		for idx_file, idx in index_paths {

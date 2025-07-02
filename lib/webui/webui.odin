@@ -1,10 +1,8 @@
 package webui
 
 import "base:intrinsics"
-import "base:runtime"
 import "core:c"
 import "core:encoding/json"
-import "core:fmt"
 import "core:strings"
 import "core:time"
 
@@ -1270,7 +1268,7 @@ Error :: enum {
 
 // Show a window using embedded HTML, or a file. If the window is already open, it will be refreshed.
 show :: proc(win: c.size_t, content: string, await: bool = false, timeout: uint = 10) -> Error {
-	res := webui_show(win, strings.unsafe_string_to_cstring(content))
+	webui_show(win, strings.unsafe_string_to_cstring(content))
 	if !await {
 		return .Failed
 	}
