@@ -1,0 +1,12 @@
+.wallpapers {
+  display: grid;
+  place-items: center;
+  gap: 10rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  /* grid-template-rows: repeat(2, minmax(200px, 1fr)); */
+}
+
+.wallpaper {
+  border: solid 2px darkcyan;
+  border-radius: 10px;
+}

@@ -1,6 +1,7 @@
 package app
 
 import "base:runtime"
+import "core:encoding/json"
 import "core:fmt"
 import os "core:os/os2"
 import "core:strings"
@@ -57,6 +58,20 @@ get_wallpapers :: proc "c" (e: ^ui.Event) {
 	ui.return_string(e, wallpapers_cstr)
 }
 
+@(private)
+get_config :: proc "c" (e: ^ui.Event) {
+	context = runtime.default_context()
+
+	cfg, err := json.marshal(config, {pretty = true}, context.temp_allocator)
+	if err != nil {
+		fmt.panicf("Failed to marshal config: %s", err)
+	}
+
+	cfg_cstr := fmt.ctprintf("%s", cfg)
+
+	ui.return_string(e, cfg_cstr)
+}
+
 
 gui :: proc() {
 	window := ui.new_window()
@@ -71,6 +86,7 @@ gui :: proc() {
 
 	ui.bind(window, "exit_app", exit_app)
 	ui.bind(window, "get_wallpapers", get_wallpapers)
+	ui.bind(window, "get_config", get_config)
 
 	for path in config.paths {
 		ui.build_virtual_file_system(path)
