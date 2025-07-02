@@ -5,7 +5,9 @@ import "../utils"
 config: utils.Config
 
 init :: proc() {
-	config = utils.get_config("/home/alvaro17f/.config/owa/config.json")
+	config_path := "/home/alvaro17f/.config/owa/config.json"
+	config = utils.get_config(config_path)
+
 	gui()
 	free_all(context.temp_allocator)
 }

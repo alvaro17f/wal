@@ -7,11 +7,15 @@ export const Settings = () => {
   return (
     <dialog id="settings">
       <h2>Settings</h2>
+      <h3>Paths:</h3>
       <ul>
-        {config?.paths.map((path: string) => (
+        {config?.paths?.map((path: string) => (
           <li>{path}</li>
         ))}
       </ul>
+      <h3>Command:</h3>
+      <i>{"{}"} will be replaced with the selected wallpaper</i>
+      <div>{config?.command}</div>
       <button
         /*// @ts-expect-error commandfor */
         commandfor="settings"

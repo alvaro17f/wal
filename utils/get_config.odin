@@ -5,6 +5,7 @@ import "core:fmt"
 import "core:os"
 
 Config :: struct {
+  command: string,
 	paths: []string,
 }
 
