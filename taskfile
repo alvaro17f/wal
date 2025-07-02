@@ -1,0 +1,150 @@
+#!/usr/bin/env bash
+# -----------------------------------------------------------------------------
+# Helper functions start with _ and aren't listed in this script's help menu.
+# -----------------------------------------------------------------------------
+
+set -euo pipefail
+
+PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+
+TTY="${TTY:-}"
+if [[ ! -t 1 ]]; then
+  TTY="-T"
+fi
+
+VERSION="$(cat $PROJECT_ROOT/VERSION)"
+
+help() {
+  echo ""
+  echo "-------------------"
+  echo " tsk [task] [args] "
+  echo "-------------------"
+  declare -F | awk '{print "◉ " $3}' | grep -v "^_" | sort
+}
+
+_build_front() {
+  cd $PROJECT_ROOT/app/front
+  bun install
+  bun run vite build
+  # bun run build
+}
+
+run() {
+  _build_front
+  cd $PROJECT_ROOT
+  odin run $PROJECT_ROOT -define="VERSION=$VERSION" --collection:lib=$PROJECT_ROOT/lib "$@"
+}
+
+debug() {
+  _build_front
+  cd $PROJECT_ROOT
+  odin run $PROJECT_ROOT -define="VERSION=$VERSION" -debug --collection:lib=$PROJECT_ROOT/lib "$@"
+}
+
+debug:sanitize() {
+  _build_front
+  cd $PROJECT_ROOT
+  odin run $PROJECT_ROOT -define="VERSION=$VERSION" -debug -sanitize:address --collection:lib=$PROJECT_ROOT/lib "$@"
+}
+
+build() {
+  _build_front
+  cd $PROJECT_ROOT
+  odin build $PROJECT_ROOT -define="VERSION=$VERSION" -o:speed --collection:lib=$PROJECT_ROOT/lib "$@"
+}
+
+webui() {
+  platform=$(uname -s)
+  arch=$(uname -m)
+  case "$platform" in
+  Linux)
+    case "$arch" in
+    x86_64)
+      archive="webui-linux-gcc-x64.zip"
+      ;;
+    aarch64 | arm64)
+      archive="webui-linux-gcc-arm64.zip"
+      ;;
+    arm*)
+      archive="webui-linux-gcc-arm.zip"
+      ;;
+    *)
+      echo "The setup script currently does not support $arch architectures on $platform."
+      exit 1
+      ;;
+    esac
+    ;;
+  Darwin)
+    case "$arch" in
+    x86_64)
+      archive="webui-macos-clang-x64.zip"
+      ;;
+    arm64)
+      archive="webui-macos-clang-arm64.zip"
+      ;;
+    *)
+      echo "The setup script currently does not support $arch architectures on $platform."
+      exit 1
+      ;;
+    esac
+    ;;
+  *)
+    echo "The setup script currently does not support $platform."
+    exit 1
+    ;;
+  esac
+
+  output="$(dirname "$0")/lib/webui/webui"
+  version="nightly"
+  while [ $# -gt 0 ]; do
+    case "$1" in
+    -o | --output)
+      output="$2"
+      shift
+      ;;
+    --nightly)
+      version="nightly"
+      shift
+      ;;
+    -h | --help)
+      echo -e "Usage: setup.sh [flags]\n"
+      echo "Flags:"
+      echo "  -o, --output: Specify the output directory"
+      echo "  --nightly: Download the development release"
+      echo "  -h, --help: Display this help message"
+      exit 0
+      ;;
+    *)
+      echo "Unknown option: $1"
+      exit 1
+      ;;
+    esac
+  done
+
+  rm -rf "$output"
+
+  release_base_url="https://github.com/webui-dev/webui/releases/"
+  if [ "$version" = "nightly" ]; then
+    url="$release_base_url/download/nightly/$archive"
+  elif [ "$version" = "latest" ]; then
+    url="$release_base_url/latest/download/$archive"
+  fi
+
+  echo "Downloading WebUI@$version..."
+  curl -L "$url" -o "$archive"
+  echo ""
+
+  echo "Extracting..."
+  archive_dir="${archive%.zip}"
+  unzip "$archive"
+  mv "$archive_dir" "$output"
+  echo ""
+
+  rm -f "$archive"
+  rm -rf "${output:?}/$archive_dir"
+
+  echo "Done."
+}
+
+TIMEFORMAT=$'\nTask completed in %3lR'
+time "${@:-help}"
