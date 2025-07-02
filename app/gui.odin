@@ -3,7 +3,21 @@ package app
 import "base:runtime"
 import "core:fmt"
 import os "core:os/os2"
+import "core:strings"
 import ui "lib:webui"
+
+@(private)
+IMG_EXTENSIONS: [9]string : {
+	".jpg",
+	".jpeg",
+	".png",
+	".gif",
+	".bmp",
+	".tiff",
+	".webp",
+	".svg",
+	".ico",
+}
 
 @(private)
 exit_app :: proc "c" (e: ^ui.Event) {
@@ -19,10 +33,22 @@ get_wallpapers :: proc "c" (e: ^ui.Event) {
 	defer delete(wallpapers)
 
 	for path in config.paths {
-		file, _ := os.read_all_directory_by_path(path, context.temp_allocator)
+		files, error := os.read_all_directory_by_path(path, context.temp_allocator)
+		if error != nil {
+			fmt.panicf("Failed to read directory %s: %s", path, error)
+		}
 
-		for f in file {
-			append_string(&wallpapers, fmt.tprintf("%s ", f.name))
+		for file in files {
+			for extension in IMG_EXTENSIONS {
+				if strings.ends_with(
+					strings.to_lower(file.name, context.temp_allocator),
+					extension,
+				) {
+					append_string(&wallpapers, fmt.tprintf("%s ", file.name))
+					break
+				}
+			}
+
 		}
 	}
 
