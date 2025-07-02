@@ -10,11 +10,16 @@ export const useWallpapers = () => {
     setWallpapers(walls);
   };
 
+  const setWallpaper = async (wallpaper: string) => {
+    // @ts-expect-error webui
+    webui.set_wallpaper(wallpaper);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       getWallpapers();
     }, 100);
   }, []);
 
-  return { wallpapers };
+  return { wallpapers, setWallpaper };
 };
