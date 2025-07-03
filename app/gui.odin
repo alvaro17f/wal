@@ -93,7 +93,7 @@ set_wallpaper :: proc "c" (e: ^ui.Event) {
 		)
 	}
 
-	utils.exec(command)
+	utils.exec(command, false, false)
 }
 
 
