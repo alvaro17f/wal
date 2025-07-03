@@ -116,7 +116,7 @@ gui :: proc() {
 	for path in config.paths {
 		ui.build_virtual_file_system(path)
 	}
-	ui.build_virtual_file_system("app/front/dist")
+	ui.build_virtual_file_system(fmt.tprintf("%s/front/dist", #directory))
 
 	ui.set_file_handler(window, ui.vfs)
 
