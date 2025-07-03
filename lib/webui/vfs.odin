@@ -5,24 +5,86 @@ import "core:fmt"
 import "core:os"
 import "core:strings"
 
+//////////////////////////////////////////////////////////////////////////////
+directories := [][]runtime.Load_Directory_File {
+	#load_directory("../../app/front/dist"),
+	#load_directory("../../app/front/dist/assets"),
+}
 
-virtual_files := make(map[string][]byte) // map container of the virtual file system
-index_paths := make([dynamic]string) // dynamic array to hold index_files/paths
+vfsx :: proc "c" (path: cstring, length: ^i32) -> rawptr {
+	context = runtime.default_context()
 
+	file_data: []byte
 
-// Function to walk a directory and populate virtual_files and index_paths
+	for directory in directories {
+		for file in directory {
+			if strings.contains(fmt.tprint(path), file.name) {
+				content_type: string = string(get_mime_type(strings.clone_to_cstring(file.name)))
+
+				http_header_template: string = fmt.aprintf(
+					"HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\nCache-Control: no-cache\r\n\r\n",
+					content_type,
+					len(file.data),
+				)
+				header_length: i32 = i32(len(http_header_template))
+
+				length^ = header_length + i32(len(file.data))
+
+				file_data_str: string = strings.clone_from_bytes(file.data)
+
+				response: rawptr = rawptr(
+					raw_data(
+						transmute([]u8)strings.concatenate({http_header_template, file_data_str}),
+					),
+				)
+
+				return response
+			}
+		}
+	}
+
+	if virtual_file_system(path, &file_data) {
+		content_type: string = string(get_mime_type(path))
+
+		http_header_template: string = fmt.aprintf(
+			"HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\nCache-Control: no-cache\r\n\r\n",
+			content_type,
+			len(file_data),
+		)
+		header_length: i32 = i32(len(http_header_template))
+
+		length^ = header_length + i32(len(file_data))
+
+		file_data_str: string = strings.clone_from_bytes(file_data, context.temp_allocator)
+
+		response: rawptr = rawptr(
+			raw_data(
+				transmute([]u8)strings.concatenate(
+					{http_header_template, file_data_str},
+					context.temp_allocator,
+				),
+			),
+		)
+
+		return response
+	}
+
+	return nil
+}
+//////////////////////////////////////////////////////////////////////////////
+
+virtual_files := make(map[string][]byte)
+index_paths := make([dynamic]string)
+
 build_virtual_file_system :: proc(root_dir: string) {
-	dir_stack: [dynamic]string // stack like array for creating rel paths as we traverse files
+	dir_stack: [dynamic]string
 	append(&dir_stack, root_dir)
 
-	// loop through stack-like array till empty
 	for len(dir_stack) > 0 {
 		current_dir: string = pop(&dir_stack)
-		//fmt.printfln("Current Directory: %s\n", current_dir)
 
 		file_handle, err := os.open(current_dir)
 		if err != os.ERROR_NONE {
-			// Print error to stderr and exit with error code
 			fmt.eprintln("Could not open directory for reading", err)
 			os.exit(1)
 		}
@@ -51,18 +113,18 @@ build_virtual_file_system :: proc(root_dir: string) {
 					break
 				}
 
-				proper_path, _ := strings.remove_all(fullpath, root_dir, context.temp_allocator) // don't include the root directory in the full path
+				proper_path, _ := strings.remove_all(fullpath, root_dir, context.temp_allocator)
 				virtual_files[proper_path] = data
 
 				if strings.contains(entry.name, "index.") {
-					append(&index_paths, proper_path) // add index file to index_paths
+					append(&index_paths, proper_path)
 				}
 			} else {
-				append(&dir_stack, fullpath) // add directory to stack to loop through
+				append(&dir_stack, fullpath)
 				append(
 					&index_paths,
 					strings.concatenate({"/", entry.name, "/"}, context.temp_allocator),
-				) // add to index_paths/files
+				)
 			}
 		}
 	}
@@ -80,18 +142,14 @@ virtual_file_system :: proc(path: cstring, file_data: ^[]byte) -> bool {
 	return false
 }
 
-
 vfs :: proc "c" (path: cstring, length: ^i32) -> rawptr {
 	context = runtime.default_context()
 
 	file_data: []byte
 
-	// Try to retrieve the file from the virtual file system
 	if virtual_file_system(path, &file_data) {
-		// Get content type of file
 		content_type: string = string(get_mime_type(path))
 
-		// header template buffer and length of the header
 		http_header_template: string = fmt.aprintf(
 			"HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\nCache-Control: no-cache\r\n\r\n",
 			content_type,
@@ -99,14 +157,10 @@ vfs :: proc "c" (path: cstring, length: ^i32) -> rawptr {
 		)
 		header_length: i32 = i32(len(http_header_template))
 
-		// new length of packet for both header and file accomidated
 		length^ = header_length + i32(len(file_data))
 
 		file_data_str: string = strings.clone_from_bytes(file_data, context.temp_allocator)
 
-		// Concatenate header_template and file_data to a single string, transmute into a byte array,
-		// get the raw data of the bytearray to have a multipointer and then get the the raw pointer of
-		// the multipointer to return
 		response: rawptr = rawptr(
 			raw_data(
 				transmute([]u8)strings.concatenate(
@@ -118,7 +172,6 @@ vfs :: proc "c" (path: cstring, length: ^i32) -> rawptr {
 
 		return response
 	} else {
-		// Check for index file redirection
 		redirect_path: string = string(path)
 		redirect_length: uint = len(redirect_path)
 
