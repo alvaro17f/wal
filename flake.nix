@@ -1,3 +1,4 @@
+# https://github.com/NixOS/nixpkgs/issues/255890#issuecomment-2308881422
 {
   description = "owa";
 
@@ -11,6 +12,7 @@
 
   outputs =
     {
+      self,
       nixpkgs,
       flake-utils,
       ...
@@ -20,81 +22,133 @@
       let
         name = "owa";
 
+        src = self;
+
         pkgs = import nixpkgs { inherit system; };
 
         version = pkgs.lib.fileContents ./VERSION;
 
         nativeBuildInputs = with pkgs; [
           bash
+          nodejs
+          bun
           odin
           ols
         ];
 
         buildInputs = with pkgs; [
-          gdb
-          libGL
-          libschrift
-          libxkbcommon
+          bun
+          curl
+          glibc.static
+          nodejs
+          odin
+          ols
           openssl
-          raylib
-          resvg
-          seer
-          valgrind
-          wayland
-          wayland-protocols
-          wayland-scanner
-          xorg.libX11
+          typescript
         ];
-
-        LD_LIBRARY_PATH =
-          with pkgs;
-          "$LD_LIBRARY_PATH:${
-            lib.makeLibraryPath [
-              libGL
-              xorg.libX11
-              openssl
-            ]
-          }";
-
       in
       {
-        packages.default = pkgs.stdenv.mkDerivation {
-          name = name;
+        packages.default =
+          let
+            packageJson = pkgs.lib.importJSON "${src}/app/front/package.json";
 
-          nativeBuildInputs = nativeBuildInputs;
-          buildInputs = buildInputs;
+            front_name = packageJson.name;
+            front_version = packageJson.version;
 
-          src = ./.;
+            node_modules = pkgs.stdenv.mkDerivation {
+              inherit src;
 
-          preBuild = '''';
+              name = "${front_name}_node-modules";
+              version = front_version;
 
-          postBuild = '''';
+              nativeBuildInputs = with pkgs; [ bun ];
+              buildInputs = with pkgs; [ nodejs-slim_latest ];
 
-          buildPhase = ''
-            runHook preBuild
+              dontConfigure = true;
+              dontFixup = true; # patchShebangs produces illegal path references in FODs
 
-            runHook postBuild
-          '';
+              buildPhase = ''
+                runHook preBuild
 
-          preInstall = '''';
+                cd ./app/front
 
-          postInstall = '''';
+                export HOME=$TMPDIR
 
-          installPhase = ''
-            runHook preInstall
+                bun install --no-progress --frozen-lockfile
 
-            mkdir -p $out/bin
-            cp ${name} $out/bin/${name}
-            chmod +x $out
+                runHook postBuild
+              '';
 
-            runHook postInstall
-          '';
-        };
+              installPhase = ''
+                runHook preInstall
+
+                mkdir -p $out/node_modules
+
+                mv node_modules $out/
+
+                runHook postInstall
+              '';
+
+              outputHash =
+                if pkgs.stdenv.isLinux then "sha256-Z/k/lNMg3tzfH/ay2dXCSqMWLBORuYR4sskUtpYFVbc=" else "";
+              outputHashAlgo = "sha256";
+              outputHashMode = "recursive";
+            };
+          in
+          pkgs.stdenv.mkDerivation {
+            inherit src name version;
+
+            nativeBuildInputs = [ node_modules ] ++ nativeBuildInputs;
+            buildInputs = buildInputs;
+
+            dontConfigure = true;
+            dontFixup = true;
+
+            preBuild = ''
+              cd ./app/front
+
+              cp -a ${node_modules}/node_modules ./node_modules
+              chmod -R u+rw node_modules
+              chmod -R u+x node_modules/.bin
+              patchShebangs node_modules
+
+              export HOME=$TMPDIR
+              export PATH="$PWD/node_modules/.bin:$PATH"
+
+              bun run build
+            '';
+
+            postBuild = '''';
+
+            buildPhase = ''
+              runHook preBuild
+
+              cd ../../
+
+              odin build . -define="VERSION=${version}" -o:speed --collection:lib=lib -out:${name}
+
+              runHook postBuild
+            '';
+
+            preInstall = '''';
+
+            postInstall = '''';
+
+            installPhase = ''
+              runHook preInstall
+
+              ls
+              mkdir -p $out/bin
+              cp ${name} $out/bin/${name}
+              chmod +x $out/bin/${name}
+
+              runHook postInstall
+            '';
+          };
 
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = nativeBuildInputs;
           buildInputs = buildInputs;
-          LD_LIBRARY_PATH = LD_LIBRARY_PATH;
         };
       }
     );
