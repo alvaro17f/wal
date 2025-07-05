@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 type Config = {
-  command: string;
+  commands: string[];
   paths: string[];
 };
 
