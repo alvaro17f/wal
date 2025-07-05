@@ -78,22 +78,20 @@ get_wallpapers :: proc "c" (e: ^ui.Event) {
 set_wallpaper :: proc "c" (e: ^ui.Event) {
 	context = runtime.default_context()
 
-	command: string
 	wallpaper_path, err := ui.get_arg(string, e)
 	if err != nil {
 		fmt.panicf("Failed to get wallpaper_path arg: %s", err)
 	}
 
-	if strings.contains(config.command, "{}") {
-		command, _ = strings.replace_all(
-			config.command,
-			"{}",
-			wallpaper_path,
-			context.temp_allocator,
-		)
-	}
+	for command in config.commands {
+		cmd: string
 
-	utils.exec(command, false, false)
+		if strings.contains(command, "{}") {
+			cmd, _ = strings.replace_all(command, "{}", wallpaper_path, context.temp_allocator)
+		}
+
+		utils.exec(cmd, false, false)
+	}
 }
 
 

@@ -5,8 +5,8 @@ import "core:fmt"
 import "core:os"
 
 Config :: struct {
-  command: string,
-	paths: []string,
+	commands: []string,
+	paths:    []string,
 }
 
 get_config :: proc(path: string) -> Config {
