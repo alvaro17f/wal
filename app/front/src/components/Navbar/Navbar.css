@@ -8,3 +8,7 @@
   background-color: var(--background);
   border-radius: 10px;
 }
+
+.nav-button {
+  margin: 0.5rem;
+}
