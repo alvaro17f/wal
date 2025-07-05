@@ -39,7 +39,6 @@
         buildInputs = with pkgs; [
           bun
           curl
-          glibc.static
           nodejs
           odin
           ols
