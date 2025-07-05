@@ -1,8 +1,10 @@
 #nav {
-  display: flex;
-  justify-content: space-between;
-  margin: 2rem 0;
-  border: solid 2px darkcyan;
-  border-radius: 10px;
+  position: fixed;
+  top: 2rem;
+  right: 10rem;
+  z-index: 1;
   padding: 1rem;
+  border: solid 2px darkcyan;
+  background-color: var(--background);
+  border-radius: 10px;
 }

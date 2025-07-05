@@ -10,9 +10,14 @@ export const useWallpapers = () => {
     setWallpapers(walls);
   };
 
-  const setWallpaper = async (wallpaper: string) => {
+  const setWallpaper = (wallpaper: string) => {
     // @ts-expect-error webui
     webui.set_wallpaper(wallpaper);
+  };
+
+  const setRandomWallpaper = () => {
+    const randomWallpaper = Math.floor(Math.random() * wallpapers.length);
+    setWallpaper(wallpapers[randomWallpaper]);
   };
 
   useEffect(() => {
@@ -21,5 +26,5 @@ export const useWallpapers = () => {
     }, 100);
   }, []);
 
-  return { wallpapers, setWallpaper };
+  return { wallpapers, setWallpaper, setRandomWallpaper };
 };

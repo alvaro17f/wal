@@ -3,7 +3,7 @@
   place-items: center;
   gap: 10rem;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  /* grid-template-rows: repeat(2, minmax(200px, 1fr)); */
+  margin: 10rem 10rem 0;
 }
 
 .wallpaper {

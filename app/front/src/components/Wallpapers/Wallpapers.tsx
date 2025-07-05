@@ -1,5 +1,5 @@
 import "./Wallpapers.css";
-import { useWallpapers } from "./hooks/useWallpapers";
+import { useWallpapers } from "@/hooks/useWallpapers";
 
 export const Wallpapers = () => {
   const { wallpapers, setWallpaper } = useWallpapers();
