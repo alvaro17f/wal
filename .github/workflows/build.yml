@@ -20,7 +20,7 @@ jobs:
          include:
           - os: ubuntu-latest
             artifact_name: ${{ inputs.NAME }}
-            asset_name: ${{ inputs.NAME }}-linux-amd64.tar.gz
+            asset_name: ${{ inputs.NAME }}-x86_64-linux.tar.gz
             asset_directory: /tmp/
           # - os: macos-latest
           #   artifact_name: ${{ inputs.NAME }}
