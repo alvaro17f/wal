@@ -1,0 +1,69 @@
+name: build
+
+on:
+  workflow_call:
+    inputs:
+      NAME:
+        required: true
+        type: string
+      VERSION:
+        required: true
+        type: string
+      CHANGELOG:
+        required: true
+        type: string
+
+jobs:
+  build:
+    strategy:
+      matrix:
+         include:
+          - os: ubuntu-latest
+            artifact_name: ${{ inputs.NAME }}
+            asset_name: ${{ inputs.NAME }}-linux-amd64.tar.gz
+            asset_directory: /tmp/
+          # - os: macos-latest
+          #   artifact_name: ${{ inputs.NAME }}
+          #   asset_name: ${{ inputs.NAME }}-macos-arm64.tar.gz
+          #   asset_directory: /tmp/
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          submodules: true
+
+      - name: Setup odin
+        uses: laytan/setup-odin@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release: false
+
+      - name: Build
+        shell: bash
+        run: |
+          odin build . -define="VERSION=${{ inputs.VERSION }}" -o:speed --collection:lib=lib -out:${{ matrix.artifact_name }}
+          # ./${{ matrix.artifact_name }} -v
+
+      - name: Compress binary
+        shell: bash
+        run: |
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            7z a ${{ matrix.asset_name }} ${{ matrix.artifact_name }}
+            mkdir -p D:\\tmp
+            cp ${{ matrix.asset_name }} D:\\tmp\\${{ matrix.asset_name }}
+          else
+            tar -czf /tmp/${{ matrix.asset_name }} ${{ matrix.artifact_name }}
+          fi
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ matrix.asset_directory}}${{ matrix.asset_name }}
+          asset_name: ${{ matrix.asset_name }}
+          tag: ${{ inputs.VERSION }}
+          body: ${{ inputs.CHANGELOG }}

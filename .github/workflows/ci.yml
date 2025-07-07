@@ -1,0 +1,31 @@
+name: releaser
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  tag:
+    uses: ./.github/workflows/tag.yml
+    permissions:
+      contents: write
+
+  changelog:
+    uses: ./.github/workflows/changelog.yml
+    needs: [tag]
+    if: needs.tag.outputs.new_version
+    permissions:
+      contents: write
+
+
+
+  build:
+    uses: ./.github/workflows/build.yml
+    needs: [tag, changelog]
+    if: needs.tag.outputs.new_version
+    permissions:
+      contents: write
+    with:
+      NAME: owa
+      VERSION: ${{ needs.tag.outputs.new_version }}
+      CHANGELOG: ${{ needs.changelog.outputs.changelog }}

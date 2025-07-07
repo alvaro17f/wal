@@ -1,0 +1,31 @@
+name: tag
+
+on:
+  workflow_call:
+    outputs:
+      new_version:
+        description: New version
+        value: ${{ jobs.tag.outputs.new_version }}
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+
+    outputs:
+      new_version: ${{ steps.version.outputs.tag }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          submodules: true
+
+      - name: Detect and tag new version
+        uses: salsify/action-detect-and-tag-new-version@v2
+        id: version
+        with:
+          create-tag: true
+          tag-template: "{VERSION}"
+          version-command: |
+            cat VERSION

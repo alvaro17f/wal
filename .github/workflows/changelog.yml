@@ -1,0 +1,87 @@
+
+name: changelog
+
+on:
+  workflow_call:
+    outputs:
+      changelog:
+        description: Changelog
+        value: ${{ jobs.changelog.outputs.changelog }}
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+
+    outputs:
+      changelog: ${{ steps.build_changelog.outputs.changelog }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          submodules: true
+
+      - name: Build changelog
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v4
+        with:
+          commitMode: true
+          configurationJson: |
+            {
+              "pr_template": "- #{{TITLE}}",
+              "categories": [
+                {
+                  "title": "## 🚨 Breaking Changes",
+                  "labels": ["breaking"]
+                },
+                {
+                  "title": "## 🚀 Feature",
+                  "labels": ["feat", "feature"]
+                },
+                {
+                  "title": "## 🐛 Fix",
+                  "labels": ["fix", "bug"]
+                },
+                {
+                  "title": "## ♻️ Refactor",
+                  "labels": ["refactor"]
+                },
+                {
+                  "title": "## 🧪 Tests",
+                  "labels": ["test"]
+                },
+                {
+                  "title": "## 💄 Style",
+                  "labels": ["style"]
+                },
+                {
+                  "title": "## 📝 Docs",
+                  "labels": ["docs"]
+                },
+                {
+                  "title": "## 🔨 Chore",
+                  "labels": ["chore"]
+                },
+                {
+                  "title": "## ⚡️ Performance",
+                  "labels": ["perf"]
+                },
+                {
+                  "title": "## 👷 CI",
+                  "labels": ["ci"]
+                }
+              ],
+              "label_extractor": [
+                {
+                  "pattern": ".*!.*|^breaking:.*",
+                  "target": "breaking"
+                },
+                {
+                  "pattern": "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\\([\\w\\-\\.]+\\))?(: ([\\w ])+([\\s\\S]*))?",
+                  "target": "$1"
+                }
+              ]
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
