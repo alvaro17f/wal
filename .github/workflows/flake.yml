@@ -2,7 +2,7 @@ name: Update Nix flake
 on:
   workflow_run:
     workflows:
-     - ci
+     - build
     types:
       - completed
   workflow_dispatch:
