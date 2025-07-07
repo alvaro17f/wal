@@ -5,6 +5,9 @@ on:
      - ci
     types:
       - completed
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 0" # weekly
 jobs:
   update-flake:
     runs-on: ubuntu-latest
