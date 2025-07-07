@@ -2,7 +2,7 @@
 Name=owa
 Icon=owa
 Comment=Wallpaper Manager
-Terminal=true
+Terminal=false
 TryExec=owa
 Exec=owa %u
 Type=Application

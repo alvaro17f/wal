@@ -27,8 +27,16 @@
           installPhase = ''
             mkdir -p $out/bin
             cp ${app}/${name} $out/bin/${name}
+
+            for RES in 16 24 32 48 64 128 256; do
+              mkdir -p $out/share/icons/hicolor/"$RES"x"$RES"/apps
+              ${pkgs.imagemagick}/bin/magick assets/logo.svg -resize "$RES"x"$RES" $out/share/icons/hicolor/"$RES"x"$RES"/apps/${name}.svg
+            done
+
             mkdir -p $out/share/applications
-            install -m644 assets/owa.desktop $out/share/applications/
+            install -m644 assets/${name}.desktop $out/share/applications/
+
+
           '';
 
           desktopItems = [
