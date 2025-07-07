@@ -11,31 +11,40 @@ Config :: struct {
 
 @(private)
 help :: proc(name: string) {
+	bar :: proc(color: string) -> string {
+		return fmt.tprintf(
+			"%s***************************************************%s",
+			color,
+			colors.RESET,
+		)
+	}
+
+	cmd :: proc(command: string, description: string) {
+		fmt.printfln(
+			"%s%s:%s %s%s%s",
+			colors.YELLOW,
+			command,
+			colors.RESET,
+			colors.GREEN,
+			description,
+			colors.RESET,
+		)
+	}
+
 	fmt.printfln(
-		`
-%s***************************************************%s
-%s%s - wallpapers manager%s
-%s***************************************************%s
-%s-h, help:%s %sDisplay this help message%s
-%s-v, version:%s %sDisplay the current version%s
-  `,
-		colors.BLUE,
-		colors.RESET,
+		"%s\n%s %s - wallpapers manager%s\n%s",
+		bar(colors.BLUE),
 		colors.CYAN,
 		strings.to_upper(name, context.temp_allocator),
 		colors.RESET,
-		colors.BLUE,
-		colors.RESET,
-		colors.YELLOW,
-		colors.RESET,
-		colors.GREEN,
-		colors.RESET,
-		colors.YELLOW,
-		colors.RESET,
-		colors.GREEN,
-		colors.RESET,
+		bar(colors.BLUE),
 	)
+	cmd("-h, help", "Display this help message")
+	cmd("-v, version", "Display the current version")
+	cmd("-s, set", "Set a wallpaper with the given path")
+	cmd("-r, random", "Set a random wallpaper")
 }
+
 
 @(private)
 version :: proc(name: string, version: string) {
