@@ -6,12 +6,18 @@ import os "core:os/os2"
 
 config: utils.Config
 
-init :: proc() {
+init :: proc(version: string) {
 	home := os.get_env("HOME", context.temp_allocator)
 	config_path := fmt.tprintf("%s/.config/owa/config.json", home)
 	config = utils.get_config(config_path)
 
-	gui()
+	arguments := os.args[1:]
+
+	if (len(arguments) == 0) {
+		gui()
+	} else {
+		cli(arguments, version)
+	}
 	free_all(context.temp_allocator)
 }
 

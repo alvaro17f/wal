@@ -8,7 +8,7 @@ import "core:os"
 version :: #config(VERSION, "dev")
 
 _main :: proc() {
-	app.init()
+	app.init(version)
 }
 
 
