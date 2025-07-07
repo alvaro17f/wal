@@ -28,6 +28,18 @@
             mkdir -p $out/bin
             cp ${name} $out/bin
           '';
+
+          desktopItems = [
+            (makeDesktopItem {
+              name = name;
+              exec = name;
+              icon = ./app/front/public/owa.svg;
+              comment = "OWA wallpapers";
+              desktopName = name;
+              genericName = "wallappers";
+              categories = [ "Development" ];
+            })
+          ];
         };
       }
     );
