@@ -36,11 +36,21 @@ jobs:
           fetch-depth: 2
           submodules: true
 
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+
       - name: Setup odin
         uses: laytan/setup-odin@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release: false
+
+      - name: Build front
+        shell: bash
+        run: |
+          cd ./app/front
+          bun install
+          bun run build
 
       - name: Build
         shell: bash
