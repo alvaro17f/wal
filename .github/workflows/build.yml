@@ -61,7 +61,7 @@ jobs:
         shell: bash
         run: |
           odin build . -define="VERSION=${{ inputs.VERSION }}" -o:speed --collection:lib=lib -out:${{ matrix.artifact_name }}
-          # ./${{ matrix.artifact_name }} -v
+          ./${{ matrix.artifact_name }} -v
 
       - name: Compress binary
         shell: bash
