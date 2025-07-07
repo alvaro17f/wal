@@ -19,7 +19,7 @@
 
           app = builtins.fetchTarball {
             url = "https://github.com/alvaro17f/${name}/releases/latest/download/owa-${system}.tar.gz";
-            sha256 = "sha256:11adf6d29x0v0jd2nl3av87lc146nrbdkvp0kc4wc77yzrph1439";
+            sha256 = "sha256:04j1rxl7vvzzj17dhhsca1rgalbm82lbhdq9d4lk52w4mqrpbr0d";
           };
 
           src = ./.;
