@@ -1,10 +1,6 @@
-name: Update Nix flake
+name: update nix flake
 on:
-  workflow_run:
-    workflows:
-     - build
-    types:
-      - completed
+  workflow_call:
   workflow_dispatch:
   schedule:
     - cron: "0 0 * * 0" # weekly

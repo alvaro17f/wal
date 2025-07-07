@@ -29,3 +29,8 @@ jobs:
       NAME: owa
       VERSION: ${{ needs.tag.outputs.new_version }}
       CHANGELOG: ${{ needs.changelog.outputs.changelog }}
+
+  flake:
+    uses: ./.github/workflows/flake.yml
+    needs: [tag, changelog, build]
+
