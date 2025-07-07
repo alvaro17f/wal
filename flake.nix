@@ -30,7 +30,7 @@
 
             for RES in 16 24 32 48 64 128 256; do
               mkdir -p $out/share/icons/hicolor/"$RES"x"$RES"/apps
-              ${pkgs.imagemagick}/bin/magick assets/logo.svg -resize "$RES"x"$RES" $out/share/icons/hicolor/"$RES"x"$RES"/apps/${name}.svg
+              ${pkgs.imagemagick}/bin/magick assets/logo.png -resize "$RES"x"$RES" $out/share/icons/hicolor/"$RES"x"$RES"/apps/${name}.png
             done
 
             mkdir -p $out/share/applications
@@ -44,7 +44,7 @@
               name = name;
               exec = name;
               terminal = true;
-              icon = "${src}/app/front/public/owa.svg";
+              icon = name;
               comment = "OWA wallpapers";
               desktopName = name;
               genericName = "wallappers";
