@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=owa
+Icon=owa
+Comment=Wallpaper Manager
+Terminal=true
+TryExec=owa
+Exec=owa %u
+Type=Application
+MimeType=inode/directory
+Categories=Utility;
+Keywords=Wallpapers;Manager;

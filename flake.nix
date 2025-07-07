@@ -27,6 +27,8 @@
           installPhase = ''
             mkdir -p $out/bin
             cp ${app}/${name} $out/bin/${name}
+            mkdir -p $out/share/applications
+            install -m644 assets/owa.desktop $out/share/applications/
           '';
 
           desktopItems = [
@@ -38,7 +40,7 @@
               comment = "OWA wallpapers";
               desktopName = name;
               genericName = "wallappers";
-              categories = [ "Development" ];
+              categories = [ "Utility" ];
             })
           ];
         };
