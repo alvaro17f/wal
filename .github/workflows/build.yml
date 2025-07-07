@@ -45,6 +45,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           release: false
 
+      - name: Get webui libs
+        shell: bash
+        run: |
+          ./taskfile webui
+
       - name: Build front
         shell: bash
         run: |
