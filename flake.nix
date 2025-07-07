@@ -17,23 +17,24 @@
         packages.default = pkgs.stdenv.mkDerivation rec {
           name = "owa";
 
-          src = builtins.fetchTarball {
+          app = builtins.fetchTarball {
             url = "https://github.com/alvaro17f/${name}/releases/latest/download/owa-${system}.tar.gz";
             sha256 = "sha256:1njjg9h68wz9j79n3mgimmrr83q4zl4vap029l1rmdi74ma7jz81";
           };
 
-          source = ./.;
+          src = ./.;
 
           installPhase = ''
             mkdir -p $out/bin
-            cp ${name} $out/bin
+            cp ${app}/${name} $out/bin/${name}
           '';
 
           desktopItems = [
-            (makeDesktopItem {
+            (pkgs.makeDesktopItem {
               name = name;
               exec = name;
-              icon = ./app/front/public/owa.svg;
+              terminal = true;
+              icon = "${src}/app/front/public/owa.svg";
               comment = "OWA wallpapers";
               desktopName = name;
               genericName = "wallappers";
