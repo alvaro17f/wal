@@ -34,10 +34,24 @@
         "type": "github"
       }
     },
+    "owa": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1751959912,
+        "narHash": "sha256-BHqJpuZr759utZgDwon/hJthkDdpTXZ7ofEHJX2Btcs=",
+        "type": "tarball",
+        "url": "https://github.com/alvaro17f/owa/releases/latest/download/owa-x86_64-linux.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/alvaro17f/owa/releases/latest/download/owa-x86_64-linux.tar.gz"
+      }
+    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "owa": "owa"
       }
     },
     "systems": {

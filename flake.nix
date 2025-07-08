@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    owa = {
+      url = "https://github.com/alvaro17f/owa/releases/latest/download/owa-x86_64-linux.tar.gz";
+      flake = false;
+    };
   };
 
   outputs =
@@ -11,22 +15,17 @@
       nixpkgs,
       flake-utils,
       ...
-    }:
+    }@inputs:
     flake-utils.lib.eachDefaultSystem (
       system: with import nixpkgs { inherit system; }; {
         packages.default = pkgs.stdenv.mkDerivation rec {
           name = "owa";
 
-          app = builtins.fetchTarball {
-            url = "https://github.com/alvaro17f/${name}/releases/latest/download/owa-${system}.tar.gz";
-            sha256 = "sha256:1jxmh5yja1zil5xpckb96y8636w4zy4w40wqnmp9zvvbwsk8jyh4";
-          };
-
           src = ./.;
 
           installPhase = ''
             mkdir -p $out/bin
-            cp ${app}/${name} $out/bin/${name}
+            cp ${inputs.owa}/${name} $out/bin/${name}
 
             for RES in 16 24 32 48 64 128 256; do
               mkdir -p $out/share/icons/hicolor/"$RES"x"$RES"/apps
