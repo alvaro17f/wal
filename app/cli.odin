@@ -1,12 +1,15 @@
 package app
 
+import "../utils"
 import "core:fmt"
+import "core:math/rand"
 import "core:strings"
 import "lib:colors"
 
-Config :: struct {
+Settings :: struct {
 	name:    string,
 	version: string,
+	path:    string,
 }
 
 @(private)
@@ -32,7 +35,7 @@ help :: proc(name: string) {
 	}
 
 	fmt.printfln(
-		"%s\n%s %s - wallpapers manager%s\n%s",
+		"\n%s\n%s %s - wallpapers manager%s\n%s",
 		bar(colors.BLUE),
 		colors.CYAN,
 		strings.to_upper(name, context.temp_allocator),
@@ -59,18 +62,44 @@ version :: proc(name: string, version: string) {
 	)
 }
 
+@(private = "file")
+set_wallpaper :: proc(path: string) {
+	utils.set_wallpaper(&config, path)
+}
+
+@(private = "file")
+set_random_wallpaper :: proc() {
+	wallpapers_str := utils.get_wallpapers(&config)
+	wallpapers, err := strings.split(wallpapers_str, " ", context.temp_allocator)
+	if err != nil {
+		fmt.panicf("Failed to split wallpapers string: %s", err)
+	}
+
+	random_wallpaper := rand.choice(wallpapers)
+
+	utils.set_wallpaper(&config, random_wallpaper)
+}
+
+
 cli :: proc(arguments: []string, app_name: string, app_version: string) {
-	config := Config {
+	settings := Settings {
 		name    = app_name,
 		version = app_version,
 	}
-	for argument in arguments {
+
+	for argument, idx in arguments {
 		switch (argument) {
 		case "-h", "help":
-			help(config.name)
+			help(settings.name)
 			return
 		case "-v", "version":
-			version(config.name, config.version)
+			version(settings.name, settings.version)
+			return
+		case "-r", "random":
+			set_random_wallpaper()
+			return
+		case "-s", "set":
+			set_wallpaper(arguments[idx + 1])
 			return
 		case:
 			if (!strings.starts_with(argument, "-")) {

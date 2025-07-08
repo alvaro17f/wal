@@ -78,6 +78,7 @@ index_paths := make([dynamic]string)
 
 build_virtual_file_system :: proc(root_dir: string) {
 	dir_stack: [dynamic]string
+  defer delete(dir_stack)
 	append(&dir_stack, root_dir)
 
 	for len(dir_stack) > 0 {
