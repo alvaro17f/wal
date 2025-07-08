@@ -7,7 +7,7 @@ export const Wallpapers = () => {
   const getFileName = (wallpaperPath: string) => wallpaperPath.split("/").pop();
 
   return (
-    <div className="wallpapers">
+    <section id="wallpapers">
       {wallpapers?.map((wallpaper, idx) => {
         return (
           <img
@@ -21,6 +21,6 @@ export const Wallpapers = () => {
           />
         );
       })}
-    </div>
+    </section>
   );
 };

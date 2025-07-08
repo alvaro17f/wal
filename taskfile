@@ -25,14 +25,19 @@ help() {
 _build_front() {
   cd $PROJECT_ROOT/app/front
   bun install
-  bun run vite build
-  # bun run build
+  bun run build
 }
 
 run() {
   _build_front
   cd $PROJECT_ROOT
   odin run $PROJECT_ROOT -define="VERSION=$VERSION" --collection:lib=$PROJECT_ROOT/lib "$@"
+}
+
+run:front() {
+  cd $PROJECT_ROOT/app/front
+  bun install
+  bun run dev
 }
 
 debug() {

@@ -1,4 +1,4 @@
-.wallpapers {
+#wallpapers {
   display: grid;
   place-items: center;
   gap: 10rem;
