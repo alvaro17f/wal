@@ -1,6 +1,6 @@
 # https://github.com/NixOS/nixpkgs/issues/255890#issuecomment-2308881422
 {
-  description = "owa";
+  description = "wal";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -20,7 +20,7 @@
     flake-utils.lib.eachDefaultSystem (
       system:
       let
-        name = "owa";
+        name = "wal";
 
         src = self;
 

@@ -1,11 +1,11 @@
 {
-  description = "owa";
+  description = "wal";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    owa = {
-      url = "https://github.com/alvaro17f/owa/releases/latest/download/owa-x86_64-linux.tar.gz";
+    wal = {
+      url = "https://github.com/alvaro17f/wal/releases/latest/download/wal-x86_64-linux.tar.gz";
       flake = false;
     };
   };
@@ -19,13 +19,13 @@
     flake-utils.lib.eachDefaultSystem (
       system: with import nixpkgs { inherit system; }; {
         packages.default = pkgs.stdenv.mkDerivation rec {
-          name = "owa";
+          name = "wal";
 
           src = ./.;
 
           installPhase = ''
             mkdir -p $out/bin
-            cp ${inputs.owa}/${name} $out/bin/${name}
+            cp ${inputs.wal}/${name} $out/bin/${name}
 
             for RES in 16 24 32 48 64 128 256; do
               mkdir -p $out/share/icons/hicolor/"$RES"x"$RES"/apps
@@ -44,7 +44,7 @@
               exec = name;
               terminal = true;
               icon = name;
-              comment = "OWA wallpapers";
+              comment = "WAL wallpapers";
               desktopName = name;
               genericName = "wallappers";
               categories = [ "Utility" ];

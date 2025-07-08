@@ -5,7 +5,7 @@ import "core:fmt"
 import "core:mem"
 import "core:os"
 
-name :: "owa"
+name :: "wal"
 version :: #config(VERSION, "dev")
 
 _main :: proc() {

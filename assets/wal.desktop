@@ -1,10 +1,10 @@
 [Desktop Entry]
-Name=owa
-Icon=owa
+Name=wal
+Icon=wal
 Comment=Wallpaper Manager
 Terminal=false
-TryExec=owa
-Exec=owa %u
+TryExec=wal
+Exec=wal %u
 Type=Application
 MimeType=inode/directory
 Categories=Utility;

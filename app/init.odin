@@ -8,7 +8,7 @@ config: utils.Config
 
 init :: proc(name: string, version: string) {
 	home := os.get_env("HOME", context.temp_allocator)
-	config_path := fmt.tprintf("%s/.config/owa/config.json", home)
+	config_path := fmt.tprintf("%s/.config/wal/config.json", home)
 	config = utils.get_config(config_path)
 
 	arguments := os.args[1:]
