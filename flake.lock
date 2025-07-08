@@ -34,24 +34,11 @@
         "type": "github"
       }
     },
-    "owa": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1751974530,
-        "narHash": "sha256-K8hPFtRalIls+ymZlFwVUzmxqu7lZkymQE7+6ssGfvQ=",
-        "type": "tarball",
-        "url": "https://github.com/alvaro17f/owa/releases/latest/download/owa-x86_64-linux.tar.gz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://github.com/alvaro17f/owa/releases/latest/download/owa-x86_64-linux.tar.gz"
-      }
-    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
-        "owa": "owa"
+        "wal": "wal"
       }
     },
     "systems": {
@@ -67,6 +54,19 @@
         "owner": "nix-systems",
         "repo": "default",
         "type": "github"
+      }
+    },
+    "wal": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1751976276,
+        "narHash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo=",
+        "type": "tarball",
+        "url": "https://github.com/alvaro17f/wal/releases/latest/download/wal-x86_64-linux.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/alvaro17f/wal/releases/latest/download/wal-x86_64-linux.tar.gz"
       }
     }
   },
