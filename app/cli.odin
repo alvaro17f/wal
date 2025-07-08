@@ -59,9 +59,9 @@ version :: proc(name: string, version: string) {
 	)
 }
 
-cli :: proc(arguments: []string, app_version: string) {
+cli :: proc(arguments: []string, app_name: string, app_version: string) {
 	config := Config {
-		name    = "owa",
+		name    = app_name,
 		version = app_version,
 	}
 	for argument in arguments {

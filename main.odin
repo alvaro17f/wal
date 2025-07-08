@@ -5,10 +5,11 @@ import "core:fmt"
 import "core:mem"
 import "core:os"
 
+name :: "owa"
 version :: #config(VERSION, "dev")
 
 _main :: proc() {
-	app.init(version)
+	app.init(name, version)
 }
 
 
