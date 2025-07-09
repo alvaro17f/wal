@@ -4,6 +4,7 @@ import utils "../utils"
 import "base:runtime"
 import "core:encoding/json"
 import "core:fmt"
+import os "core:os/os2"
 import ui "lib:webui"
 
 @(private = "file")
@@ -30,12 +31,28 @@ get_config :: proc "c" (e: ^ui.Event) {
 save_config :: proc "c" (e: ^ui.Event) {
 	context = runtime.default_context()
 
-	config, err := ui.get_arg(string, e)
+	configuration, err := ui.get_arg(string, e)
 	if err != nil {
 		fmt.panicf("Failed to get config arg: %s", err)
 	}
 
-	fmt.print(config)
+	json_err := json.unmarshal_string(configuration, &config, allocator = context.temp_allocator)
+	if json_err != nil {
+		fmt.panicf("Failed to unmarshal config: %s", json_err)
+	}
+
+	data, marshal_err := json.marshal(config, {pretty = true}, context.temp_allocator)
+	if marshal_err != nil {
+		fmt.panicf("Failed to marshal config: %s", marshal_err)
+	}
+
+	write_err := os.write_entire_file(config_path, data)
+	if write_err != nil {
+		fmt.panicf("Failed to write file: %v", write_err)
+	}
+
+	utils.exec(app_name, false, false, 0)
+	ui.exit()
 }
 
 @(private = "file")
