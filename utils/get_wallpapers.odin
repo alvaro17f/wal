@@ -20,7 +20,13 @@ get_wallpapers :: proc(config: ^Config) -> string {
 	wallpapers: [dynamic]u8
 	defer delete(wallpapers)
 
+
 	for path in config.paths {
+		if (!os.exists(path)) {
+			continue
+		}
+
+		fmt.printfln("Reading directory %s", path)
 		files, error := os.read_all_directory_by_path(path, context.temp_allocator)
 		if error != nil {
 			fmt.panicf("Failed to read directory %s: %s", path, error)

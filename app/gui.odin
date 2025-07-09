@@ -5,6 +5,7 @@ import "base:runtime"
 import "core:encoding/json"
 import "core:fmt"
 import os "core:os/os2"
+import "lib:colors"
 import ui "lib:webui"
 
 @(private = "file")
@@ -96,6 +97,15 @@ gui :: proc() {
 	ui.bind(window, "set_wallpaper", set_wallpaper)
 
 	for path in config.paths {
+		if (!os.exists(path)) {
+			fmt.printfln(
+				"Unable to add %s%s%s to vfs, path does not exist",
+				colors.RED,
+				path,
+				colors.RESET,
+			)
+			continue
+		}
 		ui.build_virtual_file_system(path)
 	}
 
