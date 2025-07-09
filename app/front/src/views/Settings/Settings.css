@@ -18,16 +18,15 @@
       gap: 1rem;
 
       & .category {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        align-items: center;
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
 
         & .info {
           font-size: initial;
           font-weight: initial;
           text-wrap: nowrap;
           background-color: var(--info);
-          width: 160%;
           padding: 2px;
           padding-inline: 5px;
           border-radius: 5px;
@@ -35,12 +34,16 @@
       }
 
       & .element {
-        display: grid;
-        grid-auto-flow: column;
-        align-items: center;
+        display: flex;
+        flex-direction: row;
         justify-content: space-between;
-        margin-right: max(22rem);
-        gap: min(1rem);
+        gap: 1rem;
+        margin-right: 50%;
+
+        & button {
+          background-color: transparent;
+          border: none;
+        }
       }
     }
 
@@ -53,20 +56,24 @@
     }
 
     & .cancel-button {
-      background-color: red;
       position: absolute;
+      border: none;
+      border-radius: 5px;
       bottom: 20px;
       left: 20px;
-      width: 50%;
+      width: 40%;
       height: 40px;
     }
 
     & .save-button {
       background-color: var(--title);
+      border: none;
+      border-radius: 5px;
+      color: var(--background);
       position: absolute;
       bottom: 20px;
       right: 20px;
-      width: 50%;
+      width: 40%;
       height: 40px;
     }
   }
