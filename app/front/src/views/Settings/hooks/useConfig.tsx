@@ -1,20 +1,24 @@
-import { useEffect, useState } from "react";
-
-export type Config = {
-  commands: string[];
-  paths: string[];
-};
+import { useSettings } from "@/context/Settings/Context";
+import { useEffect } from "react";
+import { ActionKind } from "@/context/Settings/Types";
 
 export const useConfig = () => {
-  const [config, setConfig] = useState<Config>();
-  const [initialState, setInitialState] = useState<Config>();
+  const { dispatch } = useSettings();
 
   const getConfig = async () => {
     // @ts-expect-error webui
     const result = await webui.get_config();
-    const cfg = JSON.parse(result);
-    setConfig(cfg);
-    setInitialState(cfg);
+    const cfg: Record<string, string[]> = JSON.parse(result);
+
+    for (const [key, value] of Object.entries(cfg)) {
+      dispatch({
+        type: ActionKind.SET_INITIAL_VALUE,
+        payload: {
+          category: key,
+          value: value,
+        },
+      });
+    }
   };
 
   useEffect(() => {
@@ -22,26 +26,4 @@ export const useConfig = () => {
       getConfig();
     }, 100);
   }, []);
-
-  //TODO: remove
-  useEffect(() => {
-    const mockConfig: Config = {
-      commands: config?.commands ?? [
-        "hello",
-        "world -i {}",
-        "moon",
-        "my -i {}",
-      ],
-      paths: config?.paths ?? [
-        "/path/to/wallpaper2/catppuccin/hello/world",
-        "/path/to/wallpaper",
-        "/path/to/wallpaper3",
-        "/path/to/wallpaper4",
-      ],
-    };
-    setConfig(mockConfig);
-    setInitialState(mockConfig);
-  }, []);
-
-  return { config, setConfig, initialState };
 };

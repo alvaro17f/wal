@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar/Navbar";
 import { Wallpapers } from "@/components/Wallpapers/Wallpapers";
 import { useWallpapers } from "@/hooks/useWallpapers";
 import { Welcome } from "@/components/Welcome/Welcome";
+import { SettingsProvider } from "@/context/Settings/Provider";
 
 export const App = () => {
   const { wallpapers } = useWallpapers();
@@ -14,7 +15,9 @@ export const App = () => {
     <main id="app">
       <Navbar />
       {shouldShowWelcome ? <Welcome /> : <Wallpapers />}
-      <Settings />
+      <SettingsProvider>
+        <Settings />
+      </SettingsProvider>
     </main>
   );
 };

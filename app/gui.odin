@@ -26,6 +26,17 @@ get_config :: proc "c" (e: ^ui.Event) {
 	ui.return_string(e, cfg_cstr)
 }
 
+@(private = "file")
+save_config :: proc "c" (e: ^ui.Event) {
+	context = runtime.default_context()
+
+	config, err := ui.get_arg(string, e)
+	if err != nil {
+		fmt.panicf("Failed to get config arg: %s", err)
+	}
+
+	fmt.print(config)
+}
 
 @(private = "file")
 get_wallpapers :: proc "c" (e: ^ui.Event) {
@@ -50,7 +61,6 @@ set_wallpaper :: proc "c" (e: ^ui.Event) {
 	utils.set_wallpaper(&config, wallpaper_path)
 }
 
-
 gui :: proc() {
 	window := ui.new_window()
 	defer ui.clean()
@@ -64,6 +74,7 @@ gui :: proc() {
 
 	ui.bind(window, "exit_app", exit_app)
 	ui.bind(window, "get_config", get_config)
+	ui.bind(window, "save_config", save_config)
 	ui.bind(window, "get_wallpapers", get_wallpapers)
 	ui.bind(window, "set_wallpaper", set_wallpaper)
 
