@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-type Config = {
+export type Config = {
   commands: string[];
   paths: string[];
 };
@@ -21,5 +21,5 @@ export const useSettings = () => {
     }, 100);
   }, []);
 
-  return { config };
+  return { config, setConfig };
 };

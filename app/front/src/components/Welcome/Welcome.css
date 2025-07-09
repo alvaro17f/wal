@@ -10,8 +10,8 @@
   animation-name: welcome;
 
   & .article {
-    & h1 {
-      color: cornflowerblue;
+    & .title {
+      color: var(--title);
       font-size: 2rem;
     }
   }

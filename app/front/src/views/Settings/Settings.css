@@ -1,8 +1,52 @@
 #settings {
-  height: 80dvh;
-  width: 80dvw;
   background-color: var(--background);
   border-radius: 10px;
   border: none;
   box-shadow: 0 4px 8px var(--shadow);
+  height: 80dvh;
+  width: 80dvw;
+
+  & .content {
+    margin: 2rem;
+
+    & .title {
+      color: var(--title);
+      font-size: 2rem;
+    }
+
+    & .categories {
+      gap: 1rem;
+
+      & .category {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        align-items: center;
+
+        & .info {
+          font-size: initial;
+          font-weight: initial;
+          text-wrap: nowrap;
+          background-color: var(--info);
+          width: 160%;
+          padding: 2px;
+          padding-inline: 5px;
+          border-radius: 5px;
+        }
+      }
+
+      & .element {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        align-items: center;
+      }
+    }
+
+    & .close-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+    }
+  }
 }
