@@ -2,29 +2,31 @@ import { type MouseEvent, type ChangeEvent, useState } from "react";
 import { type Config } from "./hooks/useConfig.tsx";
 import "./Settings.css";
 import { useConfig } from "./hooks/useConfig.tsx";
-import { Categories } from "./constants.ts";
 
-const { commands, paths } = Categories;
+const Categories = {
+  PATHS: "paths",
+  COMMANDS: "commands",
+} as const;
+
+type CategoryItem = {
+  [key: string]: string;
+};
+
+type ShowInput = {
+  [key: string]: boolean;
+};
 
 export const Settings = () => {
   const { config, setConfig, initialState } = useConfig();
 
-  type CategoryItem = {
-    [key: string]: string;
-  };
-
   const [newCategoryItem, setNewCategoryItem] = useState<CategoryItem>({
-    [paths]: "",
-    [commands]: "",
+    [Categories.PATHS]: "",
+    [Categories.COMMANDS]: "",
   });
 
-  type ShowInput = {
-    [key: string]: boolean;
-  };
-
   const [showInput, setShowInput] = useState<ShowInput>({
-    [paths]: false,
-    [commands]: false,
+    [Categories.PATHS]: false,
+    [Categories.COMMANDS]: false,
   });
 
   const handleShowInput = (e: MouseEvent<HTMLButtonElement>) => {
@@ -118,9 +120,9 @@ export const Settings = () => {
         <h2 className="title">WAL Settings</h2>
         <div className="categories">
           <h3 className="category">
-            <span>paths</span>
+            <span>{Categories.PATHS}</span>
             <div>
-              <button id={paths} onClick={handleShowInput}>
+              <button id={Categories.PATHS} onClick={handleShowInput}>
                 +
               </button>
             </div>
@@ -138,22 +140,28 @@ export const Settings = () => {
                 </li>
               </>
             ))}
-            {showInput[paths] && (
+            {showInput[Categories.PATHS] && (
               <li className="element">
                 <div>
                   <input
-                    id={paths}
+                    id={Categories.PATHS}
                     type="text"
                     placeholder="/path/to/wallpapers/folder"
-                    value={newCategoryItem[paths]}
+                    value={newCategoryItem[Categories.PATHS]}
                     onChange={handleInputChange}
                   />
                 </div>
                 <div>
-                  <button id={paths} onClick={handleSaveNewCategoryItem}>
+                  <button
+                    id={Categories.PATHS}
+                    onClick={handleSaveNewCategoryItem}
+                  >
                     ✅
                   </button>
-                  <button id={paths} onClick={handleHideAndClearInput}>
+                  <button
+                    id={Categories.PATHS}
+                    onClick={handleHideAndClearInput}
+                  >
                     ❌
                   </button>
                 </div>
@@ -161,9 +169,9 @@ export const Settings = () => {
             )}
           </ul>
           <h3 className="category">
-            <span>commands</span>
+            <span>{Categories.COMMANDS}</span>
             <div>
-              <button id={commands} onClick={handleShowInput}>
+              <button id={Categories.COMMANDS} onClick={handleShowInput}>
                 +
               </button>
             </div>
@@ -182,22 +190,28 @@ export const Settings = () => {
                 </div>
               </li>
             ))}
-            {showInput[commands] && (
+            {showInput[Categories.COMMANDS] && (
               <li className="element">
                 <div>
                   <input
-                    id={commands}
+                    id={Categories.COMMANDS}
                     type="text"
                     placeholder="command using {} to replace wallpaper path"
-                    value={newCategoryItem[commands]}
+                    value={newCategoryItem[Categories.COMMANDS]}
                     onChange={handleInputChange}
                   />
                 </div>
                 <div>
-                  <button id={commands} onClick={handleSaveNewCategoryItem}>
+                  <button
+                    id={Categories.COMMANDS}
+                    onClick={handleSaveNewCategoryItem}
+                  >
                     ✅
                   </button>
-                  <button id={commands} onClick={handleHideAndClearInput}>
+                  <button
+                    id={Categories.COMMANDS}
+                    onClick={handleHideAndClearInput}
+                  >
                     ❌
                   </button>
                 </div>
