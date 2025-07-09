@@ -59,8 +59,8 @@
     "wal": {
       "flake": false,
       "locked": {
-        "lastModified": 1752074435,
-        "narHash": "sha256-z9wNpIJvUn4SL9bOf/4zXwfzCvGBvSzpj7n1NJRKgmE=",
+        "lastModified": 1752080912,
+        "narHash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo=",
         "type": "tarball",
         "url": "https://github.com/alvaro17f/wal/releases/latest/download/wal-x86_64-linux.tar.gz"
       },
