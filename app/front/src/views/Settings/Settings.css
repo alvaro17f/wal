@@ -36,8 +36,11 @@
 
       & .element {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-auto-flow: column;
         align-items: center;
+        justify-content: space-between;
+        margin-right: max(22rem);
+        gap: min(1rem);
       }
     }
 
@@ -46,6 +49,24 @@
       top: 20px;
       right: 20px;
       width: 40px;
+      height: 40px;
+    }
+
+    & .cancel-button {
+      background-color: red;
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      width: 50%;
+      height: 40px;
+    }
+
+    & .save-button {
+      background-color: var(--title);
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 50%;
       height: 40px;
     }
   }

@@ -1,13 +1,13 @@
 import { type MouseEvent, type ChangeEvent, useState } from "react";
-import { type Config } from "./hooks/useSettings";
+import { type Config } from "./hooks/useConfig.tsx";
 import "./Settings.css";
-import { useSettings } from "./hooks/useSettings";
+import { useConfig } from "./hooks/useConfig.tsx";
 import { Categories } from "./constants.ts";
 
 const { commands, paths } = Categories;
 
 export const Settings = () => {
-  const { config, setConfig } = useSettings();
+  const { config, setConfig, initialState } = useConfig();
 
   type CategoryItem = {
     [key: string]: string;
@@ -53,6 +53,8 @@ export const Settings = () => {
 
     setConfig((config: Config | undefined) => {
       if (!config) return;
+      if (!newCategoryItem[category]) return config;
+      if (config[category].includes(newCategoryItem[category])) return config;
 
       return {
         ...config,
@@ -83,6 +85,10 @@ export const Settings = () => {
 
     handleHideInput(category);
     handleClearNewItem(category);
+  };
+
+  const handleCancelButton = () => {
+    return initialState && setConfig(initialState);
   };
 
   const handleDeleteCategoryItem = (element: string) => {
@@ -199,6 +205,24 @@ export const Settings = () => {
             )}
           </ul>
         </div>
+        <button
+          className="cancel-button"
+          /*// @ts-expect-error commandfor */
+          commandfor="settings"
+          command="close"
+          onClick={handleCancelButton}
+        >
+          CANCEL
+        </button>
+        <button
+          className="save-button"
+          /*// @ts-expect-error commandfor */
+          commandfor="settings"
+          command="close"
+          onClick={() => console.debug("save")}
+        >
+          SAVE
+        </button>
       </section>
     </dialog>
   );
