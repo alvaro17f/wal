@@ -44,6 +44,7 @@
           border: none;
           width: 200%;
           outline: none;
+          caret-color: var(--title);
         }
 
         & button {
