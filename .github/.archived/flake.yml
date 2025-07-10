@@ -1,6 +1,5 @@
 name: update nix flake
 on:
-  workflow_call:
   workflow_dispatch:
   schedule:
     - cron: "0 0 * * 0" # weekly
