@@ -65,6 +65,7 @@ version :: proc(name: string, version: string) {
 @(private = "file")
 set_wallpaper :: proc(path: string) {
 	utils.set_wallpaper(&config, path)
+	utils.set_wallpaper_symlink(path, wallpaper_symlink_path)
 }
 
 @(private = "file")
@@ -78,6 +79,7 @@ set_random_wallpaper :: proc() {
 	random_wallpaper := rand.choice(wallpapers)
 
 	utils.set_wallpaper(&config, random_wallpaper)
+	utils.set_wallpaper_symlink(random_wallpaper, wallpaper_symlink_path)
 }
 
 

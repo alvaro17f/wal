@@ -47,7 +47,7 @@ save_config :: proc "c" (e: ^ui.Event) {
 		fmt.panicf("Failed to marshal config: %s", marshal_err)
 	}
 
-	write_err := os.write_entire_file(config_path, data)
+	write_err := os.write_entire_file(config_file_path, data)
 	if write_err != nil {
 		fmt.panicf("Failed to write file: %v", write_err)
 	}
@@ -77,6 +77,7 @@ set_wallpaper :: proc "c" (e: ^ui.Event) {
 	}
 
 	utils.set_wallpaper(&config, wallpaper_path)
+	utils.set_wallpaper_symlink(wallpaper_path, wallpaper_symlink_path)
 }
 
 gui :: proc() {
