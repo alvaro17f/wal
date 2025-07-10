@@ -1,5 +1,5 @@
+import "./styles.css";
 import { useWallpapers } from "@/hooks/useWallpapers";
-import "./Navbar.css";
 import { useIcons } from "@/hooks/useIcons";
 
 export const Navbar = () => {

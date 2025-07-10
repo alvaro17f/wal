@@ -1,6 +1,6 @@
-import { useSettings } from "@/context/Settings/Context";
 import { useEffect } from "react";
-import { ActionKind, type Config } from "@/context/Settings/Types";
+import { useSettings } from "@/context/settings";
+import { ActionKind, type Config } from "@/context/settings/types";
 
 const isDevelopment = import.meta.env.MODE === "development";
 

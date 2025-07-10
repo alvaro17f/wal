@@ -1,7 +1,7 @@
-import "./Settings.css";
-import { Category } from "./Category/Category.tsx";
-import { useConfig } from "./hooks/useConfig.tsx";
-import { useSettings } from "@/context/Settings/Context.tsx";
+import "./styles.css";
+import { useSettings } from "@/context/settings";
+import { Category } from "./components/category";
+import { useConfig } from "./hooks/useConfig";
 
 export const Settings = () => {
   useConfig();

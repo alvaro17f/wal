@@ -1,10 +1,10 @@
-import "./App.css";
-import { Settings } from "@/views/Settings/Settings";
-import { Navbar } from "@/components/Navbar/Navbar";
-import { Wallpapers } from "@/components/Wallpapers/Wallpapers";
+import "./styles.css";
+import { Settings } from "@/views/settings";
+import { Navbar } from "@/components/navbar";
+import { Wallpapers } from "@/components/wallpapers";
 import { useWallpapers } from "@/hooks/useWallpapers";
-import { Welcome } from "@/components/Welcome/Welcome";
-import { SettingsProvider } from "@/context/Settings/Provider";
+import { Welcome } from "@/components/welcome";
+import { SettingsProvider } from "@/context/settings";
 
 export const App = () => {
   const { wallpapers } = useWallpapers();

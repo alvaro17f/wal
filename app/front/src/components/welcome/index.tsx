@@ -1,4 +1,4 @@
-import "./Welcome.css";
+import "./styles.css";
 import { useIcons } from "@/hooks/useIcons";
 import WAL from "@/assets/logo.png";
 

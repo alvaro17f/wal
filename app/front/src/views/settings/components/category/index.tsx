@@ -1,6 +1,6 @@
-import { Title } from "./Title/Title";
-import { List } from "./List/List";
-import type { CategoryType } from "./Types";
+import { Title } from "./components/title";
+import { List } from "./components/list";
+import type { CategoryType } from "./types";
 
 export const Category = ({ category }: CategoryType) => {
   return (

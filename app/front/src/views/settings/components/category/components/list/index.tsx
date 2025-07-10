@@ -1,6 +1,6 @@
-import { useSettings } from "@/context/Settings/Context";
-import { Input } from "./Input/Input";
-import type { CategoryType } from "../Types";
+import { useSettings } from "@/context/settings";
+import { Input } from "./components/input";
+import type { CategoryType } from "@/views/settings/components/category/types";
 
 export const List = ({ category }: CategoryType) => {
   const { handleDelete, state } = useSettings();

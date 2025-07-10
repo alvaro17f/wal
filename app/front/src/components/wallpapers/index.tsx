@@ -1,4 +1,4 @@
-import "./Wallpapers.css";
+import "./styles.css";
 import { useWallpapers } from "@/hooks/useWallpapers";
 
 export const Wallpapers = () => {

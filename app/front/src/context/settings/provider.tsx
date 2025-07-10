@@ -4,8 +4,8 @@ import {
   type KeyboardEvent,
   type MouseEvent,
 } from "react";
-import { SettingsContext } from "./Context";
-import { settingsReducer, initialState } from "./Reducer";
+import { SettingsContext } from "./context";
+import { settingsReducer, initialState } from "./reducer";
 import {
   Categories,
   ActionKind,
@@ -13,7 +13,7 @@ import {
   type SettingsProviderProps,
   type State,
   type Config,
-} from "./Types";
+} from "./types";
 
 export const SettingsProvider = ({ children }: SettingsProviderProps) => {
   const [state, dispatch] = useReducer(settingsReducer, initialState);

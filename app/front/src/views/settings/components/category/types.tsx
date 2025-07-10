@@ -1,3 +1,3 @@
-import type { Config } from "@/context/Settings/Types";
+import type { Config } from "@/context/settings/types";
 
 export type CategoryType = { category: keyof Config };

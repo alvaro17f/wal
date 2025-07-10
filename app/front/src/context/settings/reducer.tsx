@@ -1,4 +1,4 @@
-import { Categories, type Action, type State, ActionKind } from "./Types";
+import { Categories, type Action, type State, ActionKind } from "./types";
 
 export const initialState: State = {
   [Categories.PATHS]: {

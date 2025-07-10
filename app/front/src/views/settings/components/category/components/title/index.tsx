@@ -1,6 +1,6 @@
-import { useSettings } from "@/context/Settings/Context";
-import { Categories } from "@/context/Settings/Types";
-import type { CategoryType } from "../Types";
+import { useSettings } from "@/context/settings";
+import { Categories } from "@/context/settings/types";
+import type { CategoryType } from "@/views/settings/components/category/types";
 
 export const Title = ({ category }: CategoryType) => {
   const { handleShowInput } = useSettings();

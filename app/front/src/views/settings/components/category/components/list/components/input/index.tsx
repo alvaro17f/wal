@@ -1,7 +1,7 @@
 import type { KeyboardEvent } from "react";
-import { useSettings } from "@/context/Settings/Context";
-import { Categories, type Config } from "@/context/Settings/Types";
-import type { CategoryType } from "../../Types";
+import { useSettings } from "@/context/settings";
+import { Categories, type Config } from "@/context/settings/types";
+import type { CategoryType } from "@/views/settings/components/category/types";
 
 export const Input = ({ category }: CategoryType) => {
   const { handleCancelSave, handleInputChange, handleSave, state } =
