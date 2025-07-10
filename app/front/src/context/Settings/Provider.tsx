@@ -1,4 +1,9 @@
-import { useReducer, type ChangeEvent, type MouseEvent } from "react";
+import {
+  useReducer,
+  type ChangeEvent,
+  type KeyboardEvent,
+  type MouseEvent,
+} from "react";
 import { SettingsContext } from "./Context";
 import { settingsReducer, initialState } from "./Reducer";
 import {
@@ -29,7 +34,7 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
     });
   };
 
-  const handleSave = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleSave = (e: MouseEvent<HTMLButtonElement> | KeyboardEvent) => {
     const input = e.target as HTMLInputElement;
     const category = input?.id as keyof Config;
 
@@ -44,7 +49,9 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
     handleCancelSave(e);
   };
 
-  const handleCancelSave = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleCancelSave = (
+    e: MouseEvent<HTMLButtonElement> | KeyboardEvent,
+  ) => {
     const button = e.target as HTMLButtonElement;
     const category = button?.id;
     dispatch({ type: ActionKind.HIDE_AND_CLEAR_INPUT, payload: { category } });
