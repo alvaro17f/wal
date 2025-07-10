@@ -1,7 +1,6 @@
 package utils
 
 import os "core:os/os2"
-import "core:strings"
 import "core:time"
 
 exec :: proc(
@@ -15,7 +14,7 @@ exec :: proc(
 ) {
 	process := os.process_start(
 		{
-			command = strings.split(command, " "),
+			command = []string{"sh", "-c", command},
 			stdin = os.stdin,
 			stdout = print_stdout ? os.stdout : nil,
 			stderr = print_stderr ? os.stderr : nil,
