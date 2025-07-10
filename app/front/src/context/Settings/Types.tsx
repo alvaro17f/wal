@@ -1,6 +1,7 @@
 import {
   type ActionDispatch,
   type ChangeEvent,
+  type KeyboardEvent,
   type MouseEvent,
   type ReactNode,
 } from "react";
@@ -67,7 +68,7 @@ export type SettingsContextKind = {
   dispatch: ActionDispatch<[action: Action]>;
   Categories: typeof Categories;
   handleShowInput: (e: MouseEvent<HTMLButtonElement>) => void;
-  handleSave: (e: MouseEvent<HTMLButtonElement>) => void;
+  handleSave: (e: MouseEvent<HTMLButtonElement> | KeyboardEvent) => void;
   handleCancelSave: (e: MouseEvent<HTMLButtonElement>) => void;
   handleCancelButton: () => void;
   handleDelete: (e: MouseEvent<HTMLButtonElement>, value: string) => void;

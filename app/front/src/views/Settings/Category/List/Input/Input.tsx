@@ -1,3 +1,4 @@
+import type { KeyboardEvent } from "react";
 import { useSettings } from "@/context/Settings/Context";
 import { Categories, type Config } from "@/context/Settings/Types";
 import type { CategoryType } from "../../Types";
@@ -11,15 +12,24 @@ export const Input = ({ category }: CategoryType) => {
     [Categories.COMMANDS]: "command with {} to be replaced",
   };
 
+  const handleInputKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+      handleSave(event);
+    }
+  };
+
   return (
     <li className="element">
       <div>
         <input
           id={category}
+          className="input"
+          autoFocus
           type="text"
           placeholder={handlePlaceholder[category]}
           value={state[category].inputValue}
           onChange={handleInputChange}
+          onKeyDown={handleInputKeyDown}
         />
       </div>
       <div>

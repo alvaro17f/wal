@@ -40,10 +40,21 @@
         gap: 1rem;
         margin-right: 50%;
 
+        & .input {
+          border: none;
+          width: 200%;
+          outline: none;
+        }
+
         & button {
           background-color: transparent;
           border: none;
         }
+      }
+
+      & .element:hover {
+        background-color: var(--shadow);
+        border-radius: 10px;
       }
     }
 
