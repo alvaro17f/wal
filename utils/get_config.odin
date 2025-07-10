@@ -10,39 +10,44 @@ Config :: struct {
 }
 
 @(private = "file")
-generate_config :: proc(path: string) {
+generate_config :: proc(config_file: string, config_dir: string) {
 	init_config := Config {
 		commands = {},
 		paths    = {},
 	}
 
-	json_data, err := json.marshal(init_config)
-	if err != nil {
-		fmt.panicf("Failed to marshal JSON: %v", err)
+	if mkdir_err := os.make_directory_all(config_dir); mkdir_err != nil {
+		fmt.panicf("Failed to create directory: %v", mkdir_err)
 	}
 
-	write_err := os.write_entire_file(path, json_data)
+	json_data, json_err := json.marshal(init_config)
+	if json_err != nil {
+		fmt.panicf("Failed to marshal JSON: %v", json_err)
+	}
+
+	write_err := os.write_entire_file(config_file, json_data)
 	if write_err != nil {
-		fmt.panicf("Failed to write file: %v", err)
+		fmt.panicf("Failed to write file: %v", write_err)
 	}
 }
 
-get_config :: proc(path: string) -> Config {
+get_config :: proc(config_file: string, config_dir: string) -> Config {
 	config: Config
 
-	if (!os.exists(path)) {
-		generate_config(path)
+	if (!os.exists(config_file)) {
+		generate_config(config_file, config_dir)
 	}
 
-	data, err := os.read_entire_file_from_path(path, context.temp_allocator)
-	if err != nil {
-		fmt.panicf("Failed to read file: %v", err)
+	data, read_err := os.read_entire_file_from_path(config_file, context.temp_allocator)
+	if read_err != nil {
+		fmt.panicf("Failed to read file: %v", read_err)
 	}
 
 	if json_err := json.unmarshal(data, &config, allocator = context.temp_allocator);
 	   json_err != nil {
 		fmt.panicf("Error unmarshaling json: %v", json_err)
 	}
+
 
 	return config
 }

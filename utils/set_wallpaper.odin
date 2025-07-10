@@ -18,6 +18,14 @@ set_wallpaper_symlink :: proc(selected_wallpaper: string, wallpaper_symlink_path
 }
 
 set_wallpaper :: proc(config: ^Config, path: string) {
+	if !os.exists(path) {
+		fmt.panicf(
+			"%s[configuration_error]%s: check your configuration file",
+			colors.RED,
+			colors.RESET,
+		)
+	}
+
 	for command in config.commands {
 		cmd: string
 

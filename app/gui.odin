@@ -47,7 +47,7 @@ save_config :: proc "c" (e: ^ui.Event) {
 		fmt.panicf("Failed to marshal config: %s", marshal_err)
 	}
 
-	write_err := os.write_entire_file(config_file_path, data)
+	write_err := os.write_entire_file(config_file, data)
 	if write_err != nil {
 		fmt.panicf("Failed to write file: %v", write_err)
 	}
