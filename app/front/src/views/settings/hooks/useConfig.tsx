@@ -22,7 +22,6 @@ export const useConfig = () => {
   const { dispatch } = useSettings();
 
   const fetchConfig = async () => {
-    // @ts-expect-error webui
     const result = await webui.get_config();
     const cfg: Config = JSON.parse(result);
     return cfg;

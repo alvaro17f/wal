@@ -10,7 +10,6 @@ export const Navbar = () => {
       <button
         className="nav-button"
         onClick={() => {
-          // @ts-expect-error webui
           webui.exit_app();
         }}
       >

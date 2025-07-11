@@ -77,7 +77,6 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
       {},
     );
 
-    // @ts-expect-error webui
     await webui.save_config(JSON.stringify(newState));
   };
 
