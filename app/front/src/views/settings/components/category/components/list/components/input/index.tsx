@@ -23,6 +23,7 @@ export const Input = ({ category }: CategoryType) => {
       <div>
         <input
           id={category}
+          data-testid={`${category}-input`}
           className="input"
           autoFocus
           type="text"

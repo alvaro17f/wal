@@ -5,14 +5,14 @@ import { Navbar } from "./index";
 import * as useWallpapers from "@/hooks/useWallpapers";
 import * as useIcons from "@/hooks/useIcons";
 
-describe("<Navbar />", () => {
-  const ExitMock = "exit.png";
-  const RandomMock = "random.png";
-  const SettingsMock = "settings.png";
-  const setRandomWallpaperMock = vi.fn();
-  const setWallpaperMock = vi.fn();
-  const webuiExitAppMock = vi.fn();
+const ExitMock = "exit.png";
+const RandomMock = "random.png";
+const SettingsMock = "settings.png";
+const setRandomWallpaperMock = vi.fn();
+const setWallpaperMock = vi.fn();
+const webuiExitAppMock = vi.fn();
 
+describe("<Navbar />", () => {
   beforeEach(() => {
     vi.spyOn(useWallpapers, "useWallpapers").mockReturnValue({
       setRandomWallpaper: setRandomWallpaperMock,

@@ -9,7 +9,11 @@ export const Title = ({ category }: CategoryType) => {
     <h3 className="category">
       <span>{category}</span>
       <div>
-        <button id={category} onClick={handleShowInput}>
+        <button
+          id={category}
+          data-testid={`${category}-button`}
+          onClick={handleShowInput}
+        >
           +
         </button>
       </div>

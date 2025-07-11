@@ -21,7 +21,7 @@ export const Settings = () => {
         <h2 className="title">WAL Settings</h2>
         <div className="categories">
           {Object.values(Categories).map((category) => (
-            <Category category={category} />
+            <Category category={category} key={category} />
           ))}
         </div>
         <button
