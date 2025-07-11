@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { Settings } from "./index";
 import { SettingsProvider } from "@/context/settings";
 import { Categories } from "@/context/settings/types";
@@ -50,7 +50,9 @@ describe("<Settings />", () => {
     );
     const cancelButton = getByText("CANCEL");
     await user.click(cancelButton);
-    expect(webuiGetConfigMock).toHaveBeenCalled();
+    await waitFor(() => expect(webuiGetConfigMock).toHaveBeenCalled(), {
+      timeout: 1000,
+    });
   });
 
   test("calls handleSaveButton on save button click", async () => {
