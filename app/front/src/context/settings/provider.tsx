@@ -62,13 +62,12 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
   };
 
   const handleEdit = (
-    e: MouseEvent<HTMLSpanElement, MouseEvent>,
+    e: React.KeyboardEvent | React.MouseEvent<HTMLSpanElement>,
     newValue: string,
   ) => {
     const spanElement = e.target as HTMLSpanElement;
     const category = spanElement?.id;
     const previousValue = spanElement?.innerText;
-    console.debug({ e, category, previousValue, newValue });
 
     dispatch({
       type: ActionKind.EDIT_VALUE,
