@@ -61,6 +61,21 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
     dispatch({ type: ActionKind.RESET_CURRENT_VALUE });
   };
 
+  const handleEdit = (
+    e: MouseEvent<HTMLSpanElement, MouseEvent>,
+    newValue: string,
+  ) => {
+    const spanElement = e.target as HTMLSpanElement;
+    const category = spanElement?.id;
+    const previousValue = spanElement?.innerText;
+    console.debug({ e, category, previousValue, newValue });
+
+    dispatch({
+      type: ActionKind.EDIT_VALUE,
+      payload: { category, previousValue, newValue },
+    });
+  };
+
   const handleDelete = (e: MouseEvent<HTMLButtonElement>, value: string) => {
     const button = e.target as HTMLButtonElement;
     const category = button?.id;
@@ -85,6 +100,7 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
     dispatch,
     Categories,
     handleCancelButton,
+    handleEdit,
     handleSave,
     handleCancelSave,
     handleDelete,

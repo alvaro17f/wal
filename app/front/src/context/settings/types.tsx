@@ -27,12 +27,13 @@ export type State = {
 
 export const ActionKind = {
   CHANGE_INPUT_VALUE: "CHANGE_INPUT_VALUE",
+  DELETE_VALUE: "DELETE_VALUE",
+  EDIT_VALUE: "EDIT_VALUE",
   HIDE_AND_CLEAR_INPUT: "HIDE_AND_CLEAR_INPUT",
+  RESET_CURRENT_VALUE: "RESET_CURRENT_VALUE",
   SAVE_INPUT_VALUE: "SAVE_INPUT_VALUE",
   SET_INITIAL_VALUE: "SET_INITIAL_VALUE",
   SHOW_INPUT: "SHOW_INPUT",
-  RESET_CURRENT_VALUE: "RESET_CURRENT_VALUE",
-  DELETE_VALUE: "DELETE_VALUE",
 } as const;
 
 export type Action =
@@ -55,6 +56,10 @@ export type Action =
   | { type: typeof ActionKind.SHOW_INPUT; payload: { category: string } }
   | { type: typeof ActionKind.RESET_CURRENT_VALUE }
   | {
+      type: typeof ActionKind.EDIT_VALUE;
+      payload: { category: string; previousValue: string; newValue: string };
+    }
+  | {
       type: typeof ActionKind.DELETE_VALUE;
       payload: { category: string; value: string };
     };
@@ -67,11 +72,15 @@ export type SettingsContextKind = {
   state: State;
   dispatch: ActionDispatch<[action: Action]>;
   Categories: typeof Categories;
-  handleShowInput: (e: MouseEvent<HTMLButtonElement>) => void;
-  handleSave: (e: MouseEvent<HTMLButtonElement> | KeyboardEvent) => void;
-  handleCancelSave: (e: MouseEvent<HTMLButtonElement>) => void;
   handleCancelButton: () => void;
+  handleCancelSave: (e: MouseEvent<HTMLButtonElement>) => void;
   handleDelete: (e: MouseEvent<HTMLButtonElement>, value: string) => void;
-  handleSaveButton: () => Promise<void>;
+  handleEdit: (
+    e: MouseEvent<HTMLSpanElement> | KeyboardEvent,
+    newValue: string,
+  ) => void;
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleSave: (e: MouseEvent<HTMLButtonElement> | KeyboardEvent) => void;
+  handleSaveButton: () => Promise<void>;
+  handleShowInput: (e: MouseEvent<HTMLButtonElement>) => void;
 };

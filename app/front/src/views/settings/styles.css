@@ -40,6 +40,10 @@
         gap: 1rem;
         margin-right: 50%;
 
+        & span:hover {
+          cursor: pointer;
+        }
+
         & .input {
           border: none;
           width: 200%;

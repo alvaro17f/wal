@@ -42,18 +42,40 @@ export const settingsReducer = (state: State, action: Action): State => {
           currentValue: action.payload?.value,
         },
       };
-
     case ActionKind.RESET_CURRENT_VALUE:
       return {
         ...state,
-        ...Object.keys(state).reduce((newState, category) => {
-          const categoryKey = category as keyof State;
-          newState[categoryKey] = {
-            ...state[categoryKey],
-            currentValue: state[categoryKey].initialValue,
+        ...Object.keys(state).reduce((newState, category: keyof State) => {
+          // const categoryKey = category as keyof State;
+          newState[category] = {
+            ...state[category],
+            currentValue: state[category].initialValue,
           };
           return newState;
         }, {} as State),
+      };
+    case ActionKind.EDIT_VALUE:
+      return {
+        ...state,
+        [action.payload?.category]: {
+          ...state[action.payload?.category],
+          // currentValue: state[action.payload?.category].currentValue.map(
+          //   (current) =>
+          //     current === action.payload?.previousValue
+          //       ? action.payload?.newValue
+          //       : current,
+          // ),
+          currentValue: state[action.payload?.category].currentValue.reduce(
+            (acc: string[], current: string) => {
+              if (current === action.payload?.previousValue) {
+                return [...acc, action.payload?.newValue];
+              }
+
+              return [...acc, current];
+            },
+            [] as string[],
+          ),
+        },
       };
     case ActionKind.DELETE_VALUE:
       return {
