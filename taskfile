@@ -5,14 +5,14 @@
 
 set -euo pipefail
 
-PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || PROJECT_ROOT="$PWD"
 
 TTY="${TTY:-}"
 if [[ ! -t 1 ]]; then
   TTY="-T"
 fi
 
-VERSION="$(cat $PROJECT_ROOT/VERSION)"
+VERSION="$(cat $PROJECT_ROOT/VERSION 2>/dev/null)" || VERSION="dev"
 
 help() {
   echo ""
@@ -38,6 +38,11 @@ run:front() {
   cd $PROJECT_ROOT/app/front
   bun install
   bun run dev
+}
+
+run:front:check() {
+  cd $PROJECT_ROOT/app/front
+  tsc -b
 }
 
 debug() {
