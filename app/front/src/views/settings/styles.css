@@ -5,61 +5,59 @@
   box-shadow: 0 4px 8px var(--shadow);
   height: 80dvh;
   width: 80dvw;
+  overflow-y: hidden;
+  outline: none;
 
-  & .content {
+  & .title {
+    color: var(--title);
+    font-size: 2rem;
+    margin-left: 3%;
+  }
+
+  & form {
     margin: 2rem;
+    height: 70%;
+    overflow-y: auto;
 
-    & .title {
-      color: var(--title);
-      font-size: 2rem;
-    }
+    & ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
 
-    & .categories {
-      gap: 1rem;
-
-      & .category {
+      & li {
         display: flex;
         flex-direction: row;
         gap: 1rem;
+        margin-right: 20px;
 
-        & .info {
-          font-size: initial;
-          font-weight: initial;
-          text-wrap: nowrap;
-          background-color: var(--info);
-          padding: 2px;
-          padding-inline: 5px;
-          border-radius: 5px;
-        }
-      }
-
-      & .element {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 1rem;
-        margin-right: 50%;
-
-        & span:hover {
-          cursor: pointer;
+        &:nth-child(even) > input {
+          background-color: rgba(0, 0, 0, 0.3);
         }
 
-        & .input {
+        & input {
+          width: 100%;
           border: none;
-          width: 200%;
+          padding: 10px;
           outline: none;
           caret-color: var(--title);
+          background-color: rgba(0, 0, 0, 0.1);
+
+          &:hover {
+            background-color: oklch(from slategray calc(l + 0.2) c h / 0.2);
+          }
         }
 
         & button {
-          background-color: transparent;
+          width: 100px;
+          height: 40px;
+          background-color: crimson;
           border: none;
-        }
-      }
+          border-radius: 5px;
 
-      & .element:hover {
-        background-color: var(--shadow);
-        border-radius: 10px;
+          &:hover {
+            background-color: rgb(150, 0, 30, 0.5);
+          }
+        }
       }
     }
 
@@ -69,6 +67,13 @@
       right: 20px;
       width: 40px;
       height: 40px;
+      background-color: slategray;
+      border: none;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: oklch(from slategray calc(l + 0.2) c h / 0.8);
+      }
     }
 
     & .cancel-button {
@@ -79,6 +84,11 @@
       left: 20px;
       width: 40%;
       height: 40px;
+      background-color: slategray;
+
+      &:hover {
+        background-color: oklch(from slategray calc(l + 0.2) c h / 0.8);
+      }
     }
 
     & .save-button {
@@ -91,6 +101,10 @@
       right: 20px;
       width: 40%;
       height: 40px;
+
+      &:hover {
+        background-color: oklch(from var(--title) calc(l + 0.2) c h / 0.8);
+      }
     }
   }
 }
