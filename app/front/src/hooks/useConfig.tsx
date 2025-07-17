@@ -43,12 +43,13 @@ export const useConfig = () => {
       }
     });
 
-    setConfig({ paths, commands });
+    const updatedConfig = { paths, commands };
 
+    // TODO: check if config has changed
     // const dlg = document.getElementById("settings") as HTMLDialogElement | null;
     // dlg?.close();
 
-    await webui.save_config(JSON.stringify(config));
+    await webui.save_config(JSON.stringify(updatedConfig));
   };
 
   const fetchConfig = () =>

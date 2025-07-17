@@ -47,7 +47,7 @@
           }
         }
 
-        & button {
+        & .trash-button {
           width: 100px;
           height: 40px;
           background-color: crimson;
@@ -56,6 +56,18 @@
 
           &:hover {
             background-color: rgb(150, 0, 30, 0.5);
+          }
+        }
+
+        & .add-button {
+          width: 100%;
+          margin-top: 0.5rem;
+          border: none;
+          border-radius: 5px;
+          background-color: slategray;
+          padding: 5px;
+          &:hover {
+            background-color: oklch(from slategray calc(l + 0.2) c h / 0.8);
           }
         }
       }

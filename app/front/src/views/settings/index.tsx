@@ -19,11 +19,12 @@ export const Settings = () => {
         </button>
         <ul>
           <h3>PATHS</h3>
-          {config?.paths.sort().map((path) => (
+          {config?.paths.map((path) => (
             <li key={path}>
               <input name={"path"} defaultValue={path} />
               <button
                 type="button"
+                className="trash-button"
                 onClick={() => {
                   setConfig({
                     ...config,
@@ -35,12 +36,27 @@ export const Settings = () => {
               </button>
             </li>
           ))}
+          <li>
+            <button
+              type="button"
+              className="add-button"
+              onClick={() =>
+                setConfig({
+                  ...config!,
+                  paths: [...config!.paths, ""],
+                })
+              }
+            >
+              add a path
+            </button>
+          </li>
           <h3>COMMANDS</h3>
           {config?.commands.map((command) => (
             <li key={command}>
               <input name={"command"} defaultValue={command} />
               <button
                 type="button"
+                className="trash-button"
                 onClick={() => {
                   setConfig({
                     ...config,
@@ -52,6 +68,20 @@ export const Settings = () => {
               </button>
             </li>
           ))}
+          <li>
+            <button
+              type="button"
+              className="add-button"
+              onClick={() => {
+                setConfig({
+                  ...config!,
+                  commands: [...config!.commands, ""],
+                });
+              }}
+            >
+              add a command
+            </button>
+          </li>
         </ul>
         <button
           type="button"
@@ -63,13 +93,7 @@ export const Settings = () => {
         >
           CANCEL
         </button>
-        <button
-          type="submit"
-          className="save-button"
-          /*// @ts-expect-error commandfor */
-          commandfor="settings"
-          command="close"
-        >
+        <button type="submit" className="save-button">
           SAVE
         </button>
       </form>
