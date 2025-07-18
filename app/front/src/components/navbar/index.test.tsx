@@ -4,6 +4,7 @@ import { expect, test, describe, beforeEach, vi } from 'vitest';
 import { Navbar } from './index';
 import * as useWallpapers from '@/hooks/useWallpapers';
 import * as useIcons from '@/hooks/useIcons';
+import { StateProvider } from '@/context/state/provider';
 
 const ExitMock = 'exit.png';
 const RandomMock = 'random.png';
@@ -29,7 +30,11 @@ describe('<Navbar />', () => {
 	});
 
 	test('renders navbar with buttons', () => {
-		const { getByAltText } = render(<Navbar />);
+		const { getByAltText } = render(
+			<StateProvider>
+				<Navbar />
+			</StateProvider>
+		);
 
 		expect(getByAltText('exit')).toBeDefined();
 		expect(getByAltText('random')).toBeDefined();
@@ -39,7 +44,11 @@ describe('<Navbar />', () => {
 	test('clicking the exit button calls webui.exit_app', async () => {
 		const user = userEvent.setup();
 		global.webui = { ...global.webui, exit_app: webuiExitAppMock };
-		const { getByAltText } = render(<Navbar />);
+		const { getByAltText } = render(
+			<StateProvider>
+				<Navbar />
+			</StateProvider>
+		);
 
 		await user.click(getByAltText('exit'));
 
@@ -48,7 +57,11 @@ describe('<Navbar />', () => {
 
 	test('clicking the random button calls setRandomWallpaper', async () => {
 		const user = userEvent.setup();
-		const { getByAltText } = render(<Navbar />);
+		const { getByAltText } = render(
+			<StateProvider>
+				<Navbar />
+			</StateProvider>
+		);
 
 		await user.click(getByAltText('random'));
 

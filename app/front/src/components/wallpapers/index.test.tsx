@@ -3,6 +3,7 @@ import { Wallpapers } from './index';
 import { test, describe, vi, beforeEach, type Mock, expect } from 'vitest';
 import { useWallpapers } from '@/hooks/useWallpapers';
 import userEvent from '@testing-library/user-event';
+import { StateProvider } from '@/context/state/provider';
 
 vi.mock('@/hooks/useWallpapers');
 
@@ -12,12 +13,23 @@ describe('<Wallpapers />', () => {
 	beforeEach(() => {
 		(useWallpapers as Mock).mockReturnValue({
 			setWallpaper: setWallpaperMock,
-			wallpapers: ['/path/to/wallpaper1.jpg', '/path/to/wallpaper2.jpg']
+			wallpapers: [
+				'/path/to/wallpaper1.jpg',
+				'/path/to/wallpaper2.jpg'
+			],
+			filteredWallpapers: [
+				'/path/to/wallpaper1.jpg',
+				'/path/to/wallpaper2.jpg'
+			]
 		});
 	});
 
 	test('renders wallpapers correctly', () => {
-		render(<Wallpapers />);
+		render(
+			<StateProvider>
+				<Wallpapers />
+			</StateProvider>
+		);
 
 		const images = screen.getAllByRole('img');
 
@@ -27,7 +39,11 @@ describe('<Wallpapers />', () => {
 	test('calls setWallpaper on image click', async () => {
 		const user = userEvent.setup();
 
-		render(<Wallpapers />);
+		render(
+			<StateProvider>
+				<Wallpapers />
+			</StateProvider>
+		);
 
 		const images = screen.getAllByRole('img');
 
