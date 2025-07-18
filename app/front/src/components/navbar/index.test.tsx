@@ -18,6 +18,7 @@ describe("<Navbar />", () => {
       setRandomWallpaper: setRandomWallpaperMock,
       setWallpaper: setWallpaperMock,
       wallpapers: [],
+      filteredWallpapers: [],
     });
 
     vi.spyOn(useIcons, "useIcons").mockReturnValue({

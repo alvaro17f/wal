@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useStateContext } from "@/context/state";
+import { useEffect, useMemo, useState } from "react";
 
 export const useWallpapers = () => {
   const [wallpapers, setWallpapers] = useState<string[]>([]);
+  const { state } = useStateContext();
 
   const getWallpapers = async () => {
     const result: string = await webui.get_wallpapers();
@@ -18,11 +20,24 @@ export const useWallpapers = () => {
     setWallpaper(wallpapers[randomWallpaper]);
   };
 
+  const filteredWallpapers = useMemo(
+    () =>
+      (wallpapers || []).filter((p) =>
+        p.toLowerCase().includes(state.filterQuery.toLowerCase()),
+      ),
+    [wallpapers, state.filterQuery],
+  );
+
   useEffect(() => {
     setTimeout(() => {
       getWallpapers();
     }, 100);
   }, []);
 
-  return { wallpapers, setWallpaper, setRandomWallpaper };
+  return {
+    filteredWallpapers,
+    setRandomWallpaper,
+    setWallpaper,
+    wallpapers,
+  };
 };

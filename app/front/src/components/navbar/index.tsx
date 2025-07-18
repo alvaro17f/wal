@@ -1,12 +1,24 @@
 import "./styles.css";
 import { useWallpapers } from "@/hooks/useWallpapers";
 import { useIcons } from "@/hooks/useIcons";
+import { useStateContext } from "@/context/state";
 
 export const Navbar = () => {
   const { setRandomWallpaper } = useWallpapers();
   const { Exit, Random, Settings } = useIcons();
+  const { state, setState } = useStateContext();
   return (
     <nav id="nav">
+      <input
+        type="text"
+        className="nav-filter"
+        placeholder="Filter by path…"
+        value={state.filterQuery}
+        onChange={(e) =>
+          setState((s) => ({ ...s, filterQuery: e.target.value }))
+        }
+      />
+
       <button
         className="nav-button"
         onClick={() => {

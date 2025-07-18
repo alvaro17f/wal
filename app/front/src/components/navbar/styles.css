@@ -1,5 +1,8 @@
 #nav {
   position: fixed;
+  display: inline-flex;
+  justify-content: space-between;
+  gap: 1rem;
   top: 2rem;
   right: 10rem;
   z-index: 1;
@@ -7,8 +10,14 @@
   border: solid 2px darkcyan;
   background-color: var(--background);
   border-radius: 10px;
-}
 
-.nav-button {
-  margin: 0.5rem;
+  & .nav-filter {
+    padding: 0.5rem;
+    width: 50%;
+    outline: none;
+  }
+
+  & .nav-button {
+    margin: 0.5rem;
+  }
 }
