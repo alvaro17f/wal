@@ -40,6 +40,11 @@ run:front() {
   bun run dev
 }
 
+run:front:test() {
+  cd $PROJECT_ROOT/app/front
+  bun run test
+}
+
 run:front:check() {
   cd $PROJECT_ROOT/app/front
   tsc -b
