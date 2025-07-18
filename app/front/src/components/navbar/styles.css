@@ -1,23 +1,50 @@
 #nav {
 	position: fixed;
 	top: 2rem;
-	right: 10rem;
+	right: 5rem;
 	z-index: 1;
 	display: inline-flex;
 	gap: 1rem;
 	justify-content: space-between;
 	padding: 1rem;
 	background-color: var(--background);
-	border: solid 2px darkcyan;
+	border: solid 2px slategray;
 	border-radius: 10px;
 
 	& .nav-filter {
-		width: 50%;
-		padding: 0.5rem;
+		width: 0;
+		padding: 0;
 		outline: none;
+		border: solid 1px slategray;
+		border-radius: 5px;
+		opacity: 0;
+		transition:
+			opacity 0.1s ease-in,
+			width 0.1s ease-in,
+			padding 0.1s ease-in;
 	}
 
-	& .nav-button {
-		margin: 0.5rem;
+	&:hover .nav-filter {
+		width: 100%;
+		padding: 0.5rem;
+		opacity: 1;
+	}
+
+	&:not(:hover)::before {
+		position: absolute;
+		inset: 50% auto auto 0.75rem;
+		font-size: 1rem;
+		color: slategray;
+		pointer-events: none;
+		content: '<';
+		transform: translateY(-50%);
+	}
+
+	& .nav-buttons {
+		display: inline-flex;
+
+		& .nav-button {
+			margin: 0.5rem;
+		}
 	}
 }

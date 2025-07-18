@@ -18,26 +18,27 @@ export const Navbar = () => {
 					setState(s => ({ ...s, filterQuery: e.target.value }))
 				}
 			/>
-
-			<button
-				className="nav-button"
-				onClick={() => {
-					webui.exit_app();
-				}}
-			>
-				<img src={Exit} alt="exit" />
-			</button>
-			<button className="nav-button" onClick={setRandomWallpaper}>
-				<img src={Random} alt="random" />
-			</button>
-			<button
-				className="nav-button"
-				/*// @ts-expect-error commandfor */
-				commandfor="settings"
-				command="show-modal"
-			>
-				<img src={Settings} alt="settings" />
-			</button>
+			<div className="nav-buttons">
+				<button
+					className="nav-button"
+					onClick={() => {
+						webui.exit_app();
+					}}
+				>
+					<img src={Exit} alt="exit" />
+				</button>
+				<button className="nav-button" onClick={setRandomWallpaper}>
+					<img src={Random} alt="random" />
+				</button>
+				<button
+					className="nav-button"
+					/*// @ts-expect-error commandfor */
+					commandfor="settings"
+					command="show-modal"
+				>
+					<img src={Settings} alt="settings" />
+				</button>
+			</div>
 		</nav>
 	);
 };
