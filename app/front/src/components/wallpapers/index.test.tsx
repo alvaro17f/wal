@@ -13,14 +13,11 @@ describe('<Wallpapers />', () => {
 	beforeEach(() => {
 		(useWallpapers as Mock).mockReturnValue({
 			setWallpaper: setWallpaperMock,
-			wallpapers: [
+			allWallpapers: [
 				'/path/to/wallpaper1.jpg',
 				'/path/to/wallpaper2.jpg'
 			],
-			filteredWallpapers: [
-				'/path/to/wallpaper1.jpg',
-				'/path/to/wallpaper2.jpg'
-			]
+			wallpapers: ['/path/to/wallpaper1.jpg', '/path/to/wallpaper2.jpg']
 		});
 	});
 

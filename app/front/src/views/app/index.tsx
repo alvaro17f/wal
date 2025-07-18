@@ -5,9 +5,9 @@ import { useWallpapers } from '@/hooks/useWallpapers';
 import { Welcome } from '@/components/welcome';
 
 export const App = () => {
-	const { wallpapers } = useWallpapers();
+	const { allWallpapers } = useWallpapers();
 
-	const shouldShowWelcome = !wallpapers?.length;
+	const shouldShowWelcome = !allWallpapers?.length;
 
 	return (
 		<main id="app">

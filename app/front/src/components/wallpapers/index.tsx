@@ -3,12 +3,12 @@ import { useWallpapers } from '@/hooks/useWallpapers';
 import { useStateContext } from '@/context/state';
 
 export const Wallpapers = () => {
-	const { filteredWallpapers, setWallpaper } = useWallpapers();
+	const { wallpapers, setWallpaper } = useWallpapers();
 	const { state, setState } = useStateContext();
 
 	return (
 		<section id="wallpapers">
-			{filteredWallpapers.map((wallpaper, idx) => {
+			{wallpapers.map((wallpaper, idx) => {
 				const file = wallpaper.split('/').pop()!;
 
 				return (

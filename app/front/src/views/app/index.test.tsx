@@ -34,8 +34,8 @@ describe('<App />', () => {
 	test('renders Wallpapers component when wallpapers are present', () => {
 		global.webui = { ...global.webui, get_config: webuiGetConfigMock };
 		(useWallpapers as Mock).mockReturnValue({
-			wallpapers: ['wallpaper'],
-			filteredWallpapers: ['wallpaper']
+			allWallpapers: ['wallpaper'],
+			wallpapers: ['wallpaper']
 		});
 		const { getByAltText } = render(
 			<StateProvider>
