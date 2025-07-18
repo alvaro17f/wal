@@ -1,122 +1,128 @@
 #settings {
-  background-color: var(--background);
-  border-radius: 10px;
-  border: none;
-  box-shadow: 0 4px 8px var(--shadow);
-  height: 80dvh;
-  width: 80dvw;
-  overflow-y: hidden;
-  outline: none;
+	width: 80dvw;
+	height: 80dvh;
+	overflow-y: hidden;
+	outline: none;
+	background-color: var(--background);
+	border: none;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px var(--shadow);
 
-  & .title {
-    color: var(--title);
-    font-size: 2rem;
-    margin-left: 3%;
-  }
+	& .title {
+		margin-left: 3%;
+		font-size: 2rem;
+		color: var(--title);
+	}
 
-  & form {
-    margin: 2rem;
-    height: 70%;
-    overflow-y: auto;
+	& form {
+		height: 70%;
+		margin: 2rem;
+		overflow-y: auto;
 
-    & ul {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
+		& ul {
+			display: flex;
+			flex-direction: column;
+			gap: 0.2rem;
 
-      & li {
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-        margin-right: 20px;
+			& li {
+				display: flex;
+				flex-direction: row;
+				gap: 1rem;
+				margin-right: 20px;
 
-        &:nth-child(even) > input {
-          background-color: rgba(0, 0, 0, 0.3);
-        }
+				&:nth-child(even) > input {
+					background-color: rgba(0, 0, 0, 0.3);
+				}
 
-        & input {
-          width: 100%;
-          border: none;
-          padding: 10px;
-          outline: none;
-          caret-color: var(--title);
-          background-color: rgba(0, 0, 0, 0.1);
+				& input {
+					width: 100%;
+					padding: 10px;
+					caret-color: var(--title);
+					outline: none;
+					background-color: rgba(0, 0, 0, 0.1);
+					border: none;
 
-          &:hover {
-            background-color: oklch(from slategray calc(l + 0.2) c h / 0.2);
-          }
-        }
+					&:hover {
+						background-color: oklch(
+							from slategray calc(l + 0.2) c h / 0.2
+						);
+					}
+				}
 
-        & .trash-button {
-          width: 100px;
-          height: 40px;
-          background-color: crimson;
-          border: none;
-          border-radius: 5px;
+				& .trash-button {
+					width: 100px;
+					height: 40px;
+					background-color: crimson;
+					border: none;
+					border-radius: 5px;
 
-          &:hover {
-            background-color: rgb(150, 0, 30, 0.5);
-          }
-        }
+					&:hover {
+						background-color: rgb(150, 0, 30, 0.5);
+					}
+				}
 
-        & .add-button {
-          width: 100%;
-          margin-top: 0.5rem;
-          border: none;
-          border-radius: 5px;
-          background-color: slategray;
-          padding: 5px;
-          &:hover {
-            background-color: oklch(from slategray calc(l + 0.2) c h / 0.8);
-          }
-        }
-      }
-    }
+				& .add-button {
+					width: 100%;
+					padding: 5px;
+					margin-top: 0.5rem;
+					background-color: slategray;
+					border: none;
+					border-radius: 5px;
+					&:hover {
+						background-color: oklch(
+							from slategray calc(l + 0.2) c h / 0.8
+						);
+					}
+				}
+			}
+		}
 
-    & .close-button {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      background-color: slategray;
-      border: none;
-      border-radius: 5px;
+		& .close-button {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+			width: 40px;
+			height: 40px;
+			background-color: slategray;
+			border: none;
+			border-radius: 5px;
 
-      &:hover {
-        background-color: oklch(from slategray calc(l + 0.2) c h / 0.8);
-      }
-    }
+			&:hover {
+				background-color: oklch(from slategray calc(l + 0.2) c h / 0.8);
+			}
+		}
 
-    & .cancel-button {
-      position: absolute;
-      border: none;
-      border-radius: 5px;
-      bottom: 20px;
-      left: 20px;
-      width: 40%;
-      height: 40px;
-      background-color: slategray;
+		& .cancel-button {
+			position: absolute;
+			bottom: 20px;
+			left: 20px;
+			width: 40%;
+			height: 40px;
+			background-color: slategray;
+			border: none;
+			border-radius: 5px;
 
-      &:hover {
-        background-color: oklch(from slategray calc(l + 0.2) c h / 0.8);
-      }
-    }
+			&:hover {
+				background-color: oklch(from slategray calc(l + 0.2) c h / 0.8);
+			}
+		}
 
-    & .save-button {
-      background-color: var(--title);
-      border: none;
-      border-radius: 5px;
-      color: var(--background);
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      width: 40%;
-      height: 40px;
+		& .save-button {
+			position: absolute;
+			right: 20px;
+			bottom: 20px;
+			width: 40%;
+			height: 40px;
+			color: var(--background);
+			background-color: var(--title);
+			border: none;
+			border-radius: 5px;
 
-      &:hover {
-        background-color: oklch(from var(--title) calc(l + 0.2) c h / 0.8);
-      }
-    }
-  }
+			&:hover {
+				background-color: oklch(
+					from var(--title) calc(l + 0.2) c h / 0.8
+				);
+			}
+		}
+	}
 }

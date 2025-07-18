@@ -1,11 +1,11 @@
 export type State = {
-  filterQuery: string;
-  isLoading: boolean;
-  theme: "light" | "dark";
-  tooltipText: string | null;
+	filterQuery: string;
+	isLoading: boolean;
+	theme: 'light' | 'dark';
+	tooltipText: string | null;
 };
 
 export type StateContextValue = {
-  state: State;
-  setState: React.Dispatch<React.SetStateAction<State>>;
+	state: State;
+	setState: React.Dispatch<React.SetStateAction<State>>;
 };

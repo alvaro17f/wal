@@ -1,27 +1,27 @@
 :root {
-  --text: rgba(255, 255, 255, 0.87);
-  --background: #242424;
-  --shadow: rgba(0, 0, 0, 0.2);
-  --title: cornflowerblue;
-  --info: rgba(0, 0, 0, 0.7);
+	--text: rgba(255, 255, 255, 0.87);
+	--background: #242424;
+	--shadow: rgba(0, 0, 0, 0.2);
+	--title: cornflowerblue;
+	--info: rgba(0, 0, 0, 0.7);
 
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-weight: 400;
+	line-height: 1.5;
+	color: var(--text);
 
-  color-scheme: light dark;
-  color: var(--text);
-  background-color: var(--background);
+	color-scheme: light dark;
+	background-color: var(--background);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 button:focus {
-  outline: none;
+	outline: none;
 }
 button:hover {
-  cursor: pointer;
+	cursor: pointer;
 }

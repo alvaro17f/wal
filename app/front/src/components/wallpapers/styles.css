@@ -1,23 +1,23 @@
 #wallpapers {
-  display: grid;
-  place-items: center;
-  gap: 10rem;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  margin: 10rem;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 10rem;
+	place-items: center;
+	margin: 10rem;
 }
 
 .wallpaper {
-  border: solid 2px darkcyan;
-  border-radius: 10px;
-  transition: transform 0.3s ease;
+	border: solid 2px darkcyan;
+	border-radius: 10px;
+	transition: transform 0.3s ease;
 }
 
 .wallpaper:hover {
-  cursor: pointer;
-  transform: scale(1.05);
+	cursor: pointer;
+	transform: scale(1.05);
 }
 
 .wallpaper:active {
-  cursor: pointer;
-  transform: scale(0.95);
+	cursor: pointer;
+	transform: scale(0.95);
 }

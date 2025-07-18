@@ -1,6 +1,11 @@
 /** @type {import('stylelint').Config} */
 export default {
-  rules: {
-    "block-no-empty": true,
-  },
+	extends: [
+		'stylelint-config-recess-order',
+		'stylelint-prettier/recommended'
+	],
+	rules: {
+		'block-no-empty': true,
+		'prettier/prettier': true
+	}
 };

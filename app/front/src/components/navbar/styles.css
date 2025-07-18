@@ -1,23 +1,23 @@
 #nav {
-  position: fixed;
-  display: inline-flex;
-  justify-content: space-between;
-  gap: 1rem;
-  top: 2rem;
-  right: 10rem;
-  z-index: 1;
-  padding: 1rem;
-  border: solid 2px darkcyan;
-  background-color: var(--background);
-  border-radius: 10px;
+	position: fixed;
+	top: 2rem;
+	right: 10rem;
+	z-index: 1;
+	display: inline-flex;
+	gap: 1rem;
+	justify-content: space-between;
+	padding: 1rem;
+	background-color: var(--background);
+	border: solid 2px darkcyan;
+	border-radius: 10px;
 
-  & .nav-filter {
-    padding: 0.5rem;
-    width: 50%;
-    outline: none;
-  }
+	& .nav-filter {
+		width: 50%;
+		padding: 0.5rem;
+		outline: none;
+	}
 
-  & .nav-button {
-    margin: 0.5rem;
-  }
+	& .nav-button {
+		margin: 0.5rem;
+	}
 }
