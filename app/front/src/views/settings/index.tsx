@@ -1,5 +1,11 @@
 import './styles.css';
 import { useConfig } from '@/hooks/useConfig';
+import { Category } from './components/category';
+
+export const Categories = {
+	paths: 'paths',
+	commands: 'commands'
+} as const;
 
 export const Settings = () => {
 	const { config, setConfig, handleSubmit, initialConfig } = useConfig();
@@ -17,76 +23,14 @@ export const Settings = () => {
 				>
 					X
 				</button>
-				<ul>
-					<h3>PATHS</h3>
-					{config?.paths.map(path => (
-						<li key={path}>
-							<input name={'path'} defaultValue={path} />
-							<button
-								type="button"
-								className="trash-button"
-								onClick={() => {
-									setConfig({
-										...config,
-										paths: config.paths.filter(
-											p => p !== path
-										)
-									});
-								}}
-							>
-								🗑️
-							</button>
-						</li>
-					))}
-					<li>
-						<button
-							type="button"
-							className="add-button"
-							onClick={() =>
-								setConfig({
-									...config!,
-									paths: [...config!.paths, '']
-								})
-							}
-						>
-							add a path
-						</button>
-					</li>
-					<h3>COMMANDS</h3>
-					{config?.commands.map(command => (
-						<li key={command}>
-							<input name={'command'} defaultValue={command} />
-							<button
-								type="button"
-								className="trash-button"
-								onClick={() => {
-									setConfig({
-										...config,
-										commands: config.commands.filter(
-											c => c !== command
-										)
-									});
-								}}
-							>
-								🗑️
-							</button>
-						</li>
-					))}
-					<li>
-						<button
-							type="button"
-							className="add-button"
-							onClick={() => {
-								setConfig({
-									...config!,
-									commands: [...config!.commands, '']
-								});
-							}}
-						>
-							add a command
-						</button>
-					</li>
-				</ul>
+				{Object.values(Categories).map(category => (
+					<Category
+						key={category}
+						type={category}
+						config={config!}
+						setConfig={setConfig}
+					/>
+				))}
 				<button
 					type="button"
 					className="cancel-button"

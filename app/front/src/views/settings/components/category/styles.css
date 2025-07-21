@@ -1,0 +1,70 @@
+#settings > form > .category {
+	display: flex;
+	flex-direction: column;
+	gap: 0.2rem;
+	margin-bottom: 2rem;
+
+	& .category-title {
+		margin: 0;
+		margin-bottom: 10px;
+		font-size: 1.5rem;
+	}
+
+	& .item {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+		margin-right: 20px;
+
+		&:nth-child(even) {
+			background-color: rgba(0, 0, 0, 0.3);
+		}
+
+		& input {
+			width: 100%;
+			padding: 10px;
+			font-size: 1rem;
+			caret-color: var(--title);
+			outline: none;
+			background-color: rgba(0, 0, 0, 0.1);
+			border: none;
+
+			&:hover {
+				background-color: oklch(from slategray calc(l + 0.2) c h / 0.2);
+			}
+		}
+
+		& .trash-button {
+			width: 100px;
+			height: 40px;
+			background-color: transparent;
+			border: none;
+
+			&:hover {
+				background-color: crimson;
+			}
+		}
+
+		& .reorder-handle {
+			cursor: grab;
+		}
+	}
+
+	.add-item {
+		margin-right: 20px;
+		list-style: none;
+
+		& .add-button {
+			width: 100%;
+			padding: 5px;
+			margin-top: 0.5rem;
+			background-color: slategray;
+			border: none;
+			border-radius: 5px;
+
+			&:hover {
+				background-color: oklch(from slategray calc(l + 0.2) c h / 0.8);
+			}
+		}
+	}
+}

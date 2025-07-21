@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-type Config = {
+export type Config = {
 	commands: string[];
 	paths: string[];
 };

@@ -23,64 +23,6 @@
 			outline: none;
 		}
 
-		& ul {
-			display: flex;
-			flex-direction: column;
-			gap: 0.2rem;
-
-			& li {
-				display: flex;
-				flex-direction: row;
-				gap: 1rem;
-				margin-right: 20px;
-
-				&:nth-child(even) > input {
-					background-color: rgba(0, 0, 0, 0.3);
-				}
-
-				& input {
-					width: 100%;
-					padding: 10px;
-					caret-color: var(--title);
-					outline: none;
-					background-color: rgba(0, 0, 0, 0.1);
-					border: none;
-
-					&:hover {
-						background-color: oklch(
-							from slategray calc(l + 0.2) c h / 0.2
-						);
-					}
-				}
-
-				& .trash-button {
-					width: 100px;
-					height: 40px;
-					background-color: crimson;
-					border: none;
-					border-radius: 5px;
-
-					&:hover {
-						background-color: rgb(150, 0, 30, 0.5);
-					}
-				}
-
-				& .add-button {
-					width: 100%;
-					padding: 5px;
-					margin-top: 0.5rem;
-					background-color: slategray;
-					border: none;
-					border-radius: 5px;
-					&:hover {
-						background-color: oklch(
-							from slategray calc(l + 0.2) c h / 0.8
-						);
-					}
-				}
-			}
-		}
-
 		& .close-button {
 			position: absolute;
 			top: 20px;
@@ -102,12 +44,12 @@
 			left: 20px;
 			width: 40%;
 			height: 40px;
-			background-color: slategray;
+			background-color: crimson;
 			border: none;
 			border-radius: 5px;
 
 			&:hover {
-				background-color: oklch(from slategray calc(l + 0.2) c h / 0.8);
+				background-color: oklch(from crimson calc(l + 0.2) c h / 0.8);
 			}
 		}
 
