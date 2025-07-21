@@ -6,10 +6,8 @@ import "core:strings"
 import "lib:colors"
 
 set_wallpaper_symlink :: proc(selected_wallpaper: string, wallpaper_symlink_path: string) {
-	if os.exists(wallpaper_symlink_path) {
-		if err := os.remove(wallpaper_symlink_path); err != nil {
-			fmt.printfln("%s[wallpaper_symlink_destroy]:%s %s", colors.RED, colors.RESET, err)
-		}
+	if err := os.remove(wallpaper_symlink_path); err != nil {
+		fmt.printfln("%s[wallpaper_symlink_destroy]:%s %s", colors.RED, colors.RESET, err)
 	}
 
 	if err := os.symlink(selected_wallpaper, wallpaper_symlink_path); err != nil {
@@ -17,13 +15,20 @@ set_wallpaper_symlink :: proc(selected_wallpaper: string, wallpaper_symlink_path
 	}
 }
 
-set_wallpaper :: proc(config: ^Config, path: string) {
+set_wallpaper :: proc(config: ^Config, path_: string) {
+	path := path_
+
 	if !os.exists(path) {
-		fmt.panicf(
+		fmt.printfln(
 			"%s[configuration_error]%s: check your configuration file",
 			colors.RED,
 			colors.RESET,
 		)
+		return
+	}
+
+	if strings.contains(path, " ") {
+		path, _ = strings.replace_all(path, " ", "\\ ", context.temp_allocator)
 	}
 
 	for command in config.commands {

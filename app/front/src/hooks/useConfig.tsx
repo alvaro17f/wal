@@ -58,6 +58,7 @@ export const useConfig = () => {
 				const cfg = isDevelopment
 					? mockConfig
 					: (JSON.parse(await webui.get_config()) as Config);
+				console.debug(cfg);
 				setConfig(cfg);
 				setInitialConfig(cfg);
 				isConfigFetched.current = true;

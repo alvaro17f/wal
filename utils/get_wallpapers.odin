@@ -1,5 +1,6 @@
 package utils
 
+import "../constants"
 import "core:fmt"
 import os "core:os/os2"
 import "core:strings"
@@ -20,7 +21,6 @@ get_wallpapers :: proc(config: ^Config) -> string {
 	wallpapers: [dynamic]u8
 	defer delete(wallpapers)
 
-
 	for path in config.paths {
 		if (!os.exists(path)) {
 			continue
@@ -37,7 +37,10 @@ get_wallpapers :: proc(config: ^Config) -> string {
 					strings.to_lower(file.name, context.temp_allocator),
 					extension,
 				) {
-					append_string(&wallpapers, fmt.tprintf("%s/%s ", path, file.name))
+					append_string(
+						&wallpapers,
+						fmt.tprintf("%s/%s%s", path, file.name, constants.SEPARATOR),
+					)
 					break
 				}
 			}

@@ -1,5 +1,6 @@
 package app
 
+import "../constants"
 import "../utils"
 import "core:fmt"
 import "core:math/rand"
@@ -71,7 +72,7 @@ set_wallpaper :: proc(path: string) {
 @(private = "file")
 set_random_wallpaper :: proc() {
 	wallpapers_str := utils.get_wallpapers(&config)
-	wallpapers, err := strings.split(wallpapers_str, " ", context.temp_allocator)
+	wallpapers, err := strings.split(wallpapers_str, constants.SEPARATOR, context.temp_allocator)
 	if err != nil {
 		fmt.panicf("Failed to split wallpapers string: %s", err)
 	}

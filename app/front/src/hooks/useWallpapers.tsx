@@ -7,7 +7,7 @@ export const useWallpapers = () => {
 
 	const getWallpapers = async () => {
 		const result: string = await webui.get_wallpapers();
-		const walls = result.split(/\s+/).filter(Boolean);
+		const walls = result.split('###').filter(Boolean);
 		setAllWallpapers(walls);
 	};
 

@@ -17,7 +17,7 @@ export const Wallpapers = () => {
 						className="wallpaper"
 						onClick={() => setWallpaper(wallpaper)}
 						src={file}
-						alt={`wallpaper_${idx}`}
+						alt={file}
 						height={200}
 						width={300}
 						onMouseEnter={() =>
