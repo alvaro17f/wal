@@ -1,8 +1,8 @@
-import { Settings } from '@/views/settings';
-import { Navbar } from '@/components/navbar';
-import { Wallpapers } from '@/components/wallpapers';
-import { useWallpapers } from '@/hooks/useWallpapers';
-import { Welcome } from '@/components/welcome';
+import { Navbar } from "@/components/navbar";
+import { Wallpapers } from "@/components/wallpapers";
+import { Welcome } from "@/components/welcome";
+import { useWallpapers } from "@/hooks/useWallpapers";
+import { Settings } from "@/views/settings";
 
 export const App = () => {
 	const { allWallpapers } = useWallpapers();

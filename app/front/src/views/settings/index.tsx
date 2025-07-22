@@ -1,10 +1,10 @@
-import './styles.css';
-import { useConfig } from '@/hooks/useConfig';
-import { Category } from './components/category';
+import "./styles.css";
+import { useConfig } from "@/hooks/useConfig";
+import { Category } from "./components/category";
 
 export const Categories = {
-	paths: 'paths',
-	commands: 'commands'
+	paths: "paths",
+	commands: "commands",
 } as const;
 
 export const Settings = () => {
@@ -23,7 +23,7 @@ export const Settings = () => {
 				>
 					X
 				</button>
-				{Object.values(Categories).map(category => (
+				{Object.values(Categories).map((category) => (
 					<Category
 						key={category}
 						type={category}

@@ -1,11 +1,7 @@
 /** @type {import('stylelint').Config} */
 export default {
-	extends: [
-		'stylelint-config-recess-order',
-		'stylelint-prettier/recommended'
-	],
+	extends: ["stylelint-config-recess-order"],
 	rules: {
-		'block-no-empty': true,
-		'prettier/prettier': true
-	}
+		"block-no-empty": true,
+	},
 };

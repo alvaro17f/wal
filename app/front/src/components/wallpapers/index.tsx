@@ -1,6 +1,6 @@
-import './styles.css';
-import { useWallpapers } from '@/hooks/useWallpapers';
-import { useStateContext } from '@/context/state';
+import "./styles.css";
+import { useStateContext } from "@/context/state";
+import { useWallpapers } from "@/hooks/useWallpapers";
 
 export const Wallpapers = () => {
 	const { wallpapers, setWallpaper } = useWallpapers();
@@ -8,12 +8,12 @@ export const Wallpapers = () => {
 
 	return (
 		<section id="wallpapers">
-			{wallpapers.map((wallpaper, idx) => {
-				const file = wallpaper.split('/').pop()!;
+			{wallpapers.map((wallpaper) => {
+				const file = wallpaper.split("/").pop() ?? wallpaper;
 
 				return (
 					<img
-						key={idx}
+						key={wallpaper}
 						className="wallpaper"
 						onClick={() => setWallpaper(wallpaper)}
 						src={file}
@@ -21,12 +21,11 @@ export const Wallpapers = () => {
 						height={200}
 						width={300}
 						onMouseEnter={() =>
-							setState(s => ({ ...s, tooltipText: wallpaper }))
+							setState((s) => ({ ...s, tooltipText: wallpaper }))
 						}
-						onMouseLeave={() =>
-							setState(s => ({ ...s, tooltipText: null }))
-						}
-						title={state.tooltipText ?? ''}
+						onMouseLeave={() => setState((s) => ({ ...s, tooltipText: null }))}
+						onKeyDown={(e) => e.key === "Enter" && setWallpaper(wallpaper)}
+						title={state.tooltipText ?? ""}
 					/>
 				);
 			})}

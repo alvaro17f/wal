@@ -1,24 +1,24 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 export type Config = {
 	commands: string[];
 	paths: string[];
 };
 
-const isDevelopment = import.meta.env.MODE === 'development';
+const isDevelopment = import.meta.env.MODE === "development";
 
 const mockConfig: Config = {
 	commands: [
-		'swaybg -i {} -m stretch',
-		'gsettings set org.gnome.desktop.background picture-uri {}',
-		'gsettings set org.gnome.desktop.background picture-uri-dark {}'
+		"swaybg -i {} -m stretch",
+		"gsettings set org.gnome.desktop.background picture-uri {}",
+		"gsettings set org.gnome.desktop.background picture-uri-dark {}",
 	],
 	paths: [
-		'/path/to/wallpaper1',
-		'/path/to/wallpaper2/folder',
-		'/path/to/wallpaper3/folder/demo',
-		'/path/to/wallpaper4/folder/demo/library'
-	]
+		"/path/to/wallpaper1",
+		"/path/to/wallpaper2/folder",
+		"/path/to/wallpaper3/folder/demo",
+		"/path/to/wallpaper4/folder/demo/library",
+	],
 };
 
 export const useConfig = () => {
@@ -37,9 +37,9 @@ export const useConfig = () => {
 		const commands: string[] = [];
 
 		data.forEach((value, key) => {
-			if (typeof value === 'string') {
-				if (key === 'path') paths.push(value.trim());
-				if (key === 'command') commands.push(value.trim());
+			if (typeof value === "string") {
+				if (key === "path") paths.push(value.trim());
+				if (key === "command") commands.push(value.trim());
 			}
 		});
 

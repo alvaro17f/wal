@@ -12,7 +12,7 @@ if [[ ! -t 1 ]]; then
   TTY="-T"
 fi
 
-VERSION="$(cat $PROJECT_ROOT/VERSION 2>/dev/null)" || VERSION="dev"
+VERSION="$(cat "$PROJECT_ROOT"/VERSION 2>/dev/null)" || VERSION="dev"
 
 help() {
   echo ""
@@ -23,49 +23,49 @@ help() {
 }
 
 _build_front() {
-  cd $PROJECT_ROOT/app/front
+  cd "$PROJECT_ROOT"/app/front
   bun install
   bun run build
 }
 
 run() {
   _build_front
-  cd $PROJECT_ROOT
-  odin run $PROJECT_ROOT -define="VERSION=$VERSION" --collection:lib=$PROJECT_ROOT/lib "$@"
+  cd "$PROJECT_ROOT"
+  odin run "$PROJECT_ROOT" -define="VERSION=$VERSION" --collection:lib="$PROJECT_ROOT"/lib "$@"
 }
 
 run:front() {
-  cd $PROJECT_ROOT/app/front
+  cd "$PROJECT_ROOT"/app/front
   bun install
   bun run dev
 }
 
 run:front:test() {
-  cd $PROJECT_ROOT/app/front
+  cd "$PROJECT_ROOT"/app/front
   bun run test
 }
 
 run:front:check() {
-  cd $PROJECT_ROOT/app/front
+  cd "$PROJECT_ROOT"/app/front
   tsc -b
 }
 
 debug() {
   _build_front
-  cd $PROJECT_ROOT
-  odin run $PROJECT_ROOT -define="VERSION=$VERSION" -debug --collection:lib=$PROJECT_ROOT/lib "$@"
+  cd "$PROJECT_ROOT"
+  odin run "$PROJECT_ROOT" -define="VERSION=$VERSION" -debug --collection:lib="$PROJECT_ROOT"/lib "$@"
 }
 
 debug:sanitize() {
   _build_front
-  cd $PROJECT_ROOT
-  odin run $PROJECT_ROOT -define="VERSION=$VERSION" -debug -sanitize:address --collection:lib=$PROJECT_ROOT/lib "$@"
+  cd "$PROJECT_ROOT"
+  odin run "$PROJECT_ROOT" -define="VERSION=$VERSION" -debug -sanitize:address --collection:lib="$PROJECT_ROOT"/lib "$@"
 }
 
 build() {
   _build_front
-  cd $PROJECT_ROOT
-  odin build $PROJECT_ROOT -define="VERSION=$VERSION" -o:speed --collection:lib=$PROJECT_ROOT/lib "$@"
+  cd "$PROJECT_ROOT"
+  odin build "$PROJECT_ROOT" -define="VERSION=$VERSION" -o:speed --collection:lib="$PROJECT_ROOT"/lib "$@"
 }
 
 webui() {

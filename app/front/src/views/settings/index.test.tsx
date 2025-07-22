@@ -1,8 +1,7 @@
-import { render, waitFor } from '@testing-library/react';
-import { Settings } from './index';
-// import { Categories } from "@/context/settings/types";
-import { beforeEach, describe, expect, test, vi } from 'vitest';
-import userEvent from '@testing-library/user-event';
+import { render, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { beforeEach, describe, expect, test, vi } from "vitest";
+import { Settings } from "./index";
 
 const webuiGetConfigMock = vi
 	.fn()
@@ -10,55 +9,51 @@ const webuiGetConfigMock = vi
 
 const webuiSaveConfigMock = vi.fn();
 
-describe('<Settings />', () => {
+describe("<Settings />", () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
 	});
 
-	test('renders the settings dialog', () => {
+	test("renders the settings dialog", () => {
 		const { getByRole } = render(<Settings />);
 		expect(
-			getByRole('heading', { name: 'WAL Settings', hidden: true })
+			getByRole("heading", { name: "WAL Settings", hidden: true }),
 		).toBeDefined();
-		expect(
-			getByRole('button', { name: 'CANCEL', hidden: true })
-		).toBeDefined();
-		expect(
-			getByRole('button', { name: 'SAVE', hidden: true })
-		).toBeDefined();
+		expect(getByRole("button", { name: "CANCEL", hidden: true })).toBeDefined();
+		expect(getByRole("button", { name: "SAVE", hidden: true })).toBeDefined();
 	});
 
-	test('displays the categories', () => {
+	test("displays the categories", () => {
 		// const { getByText } = render(<Settings />);
 		// Object.values(Categories).forEach((category) => {
 		//   expect(getByText(category)).toBeDefined();
 		// });
 	});
 
-	test('calls handleCancelButton on cancel button click', async () => {
+	test("calls handleCancelButton on cancel button click", async () => {
 		global.webui = { ...global.webui, get_config: webuiGetConfigMock };
 		const user = userEvent.setup();
 		const { getByText } = render(<Settings />);
-		const cancelButton = getByText('CANCEL');
+		const cancelButton = getByText("CANCEL");
 		await user.click(cancelButton);
 		await waitFor(() => expect(webuiGetConfigMock).toHaveBeenCalled(), {
-			timeout: 1000
+			timeout: 1000,
 		});
 	});
 
-	test('calls handleSaveButton on save button click', async () => {
+	test("calls handleSaveButton on save button click", async () => {
 		global.webui = {
 			...global.webui,
-			save_config: webuiSaveConfigMock
+			save_config: webuiSaveConfigMock,
 		};
 		const user = userEvent.setup();
 		const { getByText } = render(<Settings />);
-		const saveButton = getByText('SAVE');
+		const saveButton = getByText("SAVE");
 		await user.click(saveButton);
 		expect(webuiSaveConfigMock).toHaveBeenCalled();
 	});
 
-	test.skip('should allow user to input a path', async () => {
+	test.skip("should allow user to input a path", async () => {
 		// const user = userEvent.setup();
 		// const { getByTestId } = render(<Settings />);
 		// const input = getByTestId(`${Categories.PATHS}-input`);

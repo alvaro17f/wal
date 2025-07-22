@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import type { State } from './types';
-import { StateContext } from '.';
+import { useState } from "react";
+import { StateContext } from ".";
+import type { State } from "./types";
 
 const initialState: State = {
-	filterQuery: '',
+	filterQuery: "",
 	isLoading: false,
-	theme: 'light',
-	tooltipText: null
+	theme: "light",
+	tooltipText: null,
 };
 
 export const StateProvider = ({ children }: { children: React.ReactNode }) => {

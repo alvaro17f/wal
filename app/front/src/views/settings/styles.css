@@ -65,9 +65,7 @@
 			border-radius: 5px;
 
 			&:hover {
-				background-color: oklch(
-					from var(--title) calc(l + 0.2) c h / 0.8
-				);
+				background-color: oklch(from var(--title) calc(l + 0.2) c h / 0.8);
 			}
 		}
 	}

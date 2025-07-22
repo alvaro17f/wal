@@ -1,23 +1,23 @@
-import { defineConfig, mergeConfig } from 'vitest/config';
-import viteConfig from './vite.config.ts';
+import { defineConfig, mergeConfig } from "vitest/config";
+import viteConfig from "./vite.config.ts";
 
 export default mergeConfig(
 	viteConfig,
 	defineConfig({
 		test: {
 			globals: true,
-			environment: 'jsdom',
+			environment: "jsdom",
 			fakeTimers: {
 				toFake: [
-					'setTimeout',
-					'clearTimeout',
-					'setInterval',
-					'clearInterval',
-					'setImmediate',
-					'clearImmediate',
-					'Date'
-				]
-			}
-		}
-	})
+					"setTimeout",
+					"clearTimeout",
+					"setInterval",
+					"clearInterval",
+					"setImmediate",
+					"clearImmediate",
+					"Date",
+				],
+			},
+		},
+	}),
 );

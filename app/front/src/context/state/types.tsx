@@ -1,7 +1,7 @@
 export type State = {
 	filterQuery: string;
 	isLoading: boolean;
-	theme: 'light' | 'dark';
+	theme: "light" | "dark";
 	tooltipText: string | null;
 };
 

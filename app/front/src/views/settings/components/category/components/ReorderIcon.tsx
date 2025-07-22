@@ -1,4 +1,4 @@
-import { DragControls } from 'framer-motion';
+import type { DragControls } from "framer-motion";
 
 type ReorderIconProps = {
 	className?: string;
@@ -9,11 +9,11 @@ type ReorderIconProps = {
 };
 
 export function ReorderIcon({
-	className = 'reorder-handle',
-	currentColor = '#CCC',
+	className = "reorder-handle",
+	currentColor = "#CCC",
 	dragControls,
 	height = 40,
-	width = 40
+	width = 40,
 }: ReorderIconProps) {
 	return (
 		<svg
@@ -21,9 +21,10 @@ export function ReorderIcon({
 			viewBox="0 0 39 39"
 			width={width}
 			height={height}
-			onPointerDown={event => dragControls.start(event)}
+			onPointerDown={(event) => dragControls.start(event)}
 			className={className}
 		>
+			<title>reorder</title>
 			<path
 				d="M 5 0 C 7.761 0 10 2.239 10 5 C 10 7.761 7.761 10 5 10 C 2.239 10 0 7.761 0 5 C 0 2.239 2.239 0 5 0 Z"
 				fill={currentColor}

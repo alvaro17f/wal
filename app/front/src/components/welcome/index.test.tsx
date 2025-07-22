@@ -1,21 +1,21 @@
-import { render, screen } from '@testing-library/react';
-import { Welcome } from './index';
-import { useIcons } from '@/hooks/useIcons';
-import { beforeEach, describe, expect, test, vi, type Mock } from 'vitest';
+import { render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, type Mock, test, vi } from "vitest";
+import { useIcons } from "@/hooks/useIcons";
+import { Welcome } from "./index";
 
-vi.mock('@/hooks/useIcons');
+vi.mock("@/hooks/useIcons");
 
-describe('<Welcome />', () => {
+describe("<Welcome />", () => {
 	beforeEach(() => {
-		(useIcons as Mock).mockReturnValue({ Settings: 'settings.png' });
+		(useIcons as Mock).mockReturnValue({ Settings: "settings.png" });
 	});
 
-	test('renders Welcome component correctly', () => {
+	test("renders Welcome component correctly", () => {
 		render(<Welcome />);
-		expect(screen.getByText('Welcome to WAL')).toBeDefined();
+		expect(screen.getByText("Welcome to WAL")).toBeDefined();
 		expect(
-			screen.getByText('It seems to be your first time here.')
+			screen.getByText("It seems to be your first time here."),
 		).toBeDefined();
-		expect(screen.getByRole('img', { name: /wal/i })).toBeDefined();
+		expect(screen.getByRole("img", { name: /wal/i })).toBeDefined();
 	});
 });
