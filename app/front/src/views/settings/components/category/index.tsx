@@ -1,6 +1,7 @@
 import "./styles.css";
 import { Reorder, useDragControls } from "motion/react";
 import type { Config } from "@/hooks/useConfig";
+import { useSettings } from "@/hooks/useSettings";
 import type { Categories } from "@/views/settings";
 import { ReorderIcon } from "./components/ReorderIcon";
 
@@ -12,6 +13,11 @@ type CategoryProps = {
 
 export const Category = ({ type, config, setConfig }: CategoryProps) => {
 	const controls = useDragControls();
+	const { handleAddItem, handleInputReadOnly } = useSettings({
+		type,
+		config,
+		setConfig,
+	});
 
 	const singularType = type.slice(0, -1);
 
@@ -37,7 +43,11 @@ export const Category = ({ type, config, setConfig }: CategoryProps) => {
 					dragListener={true} // TODO: set false when fixed by motion
 					dragControls={controls}
 				>
-					<input name={singularType} defaultValue={element} />
+					<input
+						name={singularType}
+						defaultValue={element}
+						readOnly={handleInputReadOnly}
+					/>
 					<ReorderIcon width={20} dragControls={controls} />
 					<button
 						type="button"
@@ -55,16 +65,7 @@ export const Category = ({ type, config, setConfig }: CategoryProps) => {
 			))}
 
 			<li className="add-item">
-				<button
-					type="button"
-					className="add-button"
-					onClick={() =>
-						setConfig({
-							...config!,
-							[type]: [...config[type], ""],
-						})
-					}
-				>
+				<button type="button" className="add-button" onClick={handleAddItem}>
 					add {singularType}
 				</button>
 			</li>

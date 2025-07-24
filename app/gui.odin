@@ -52,7 +52,7 @@ save_config :: proc "c" (e: ^ui.Event) {
 		fmt.panicf("Failed to write file: %v", write_err)
 	}
 
-	utils.exec(app_name, false, false, 0)
+	utils.process_start(app_name, false, false, 0)
 	ui.exit()
 }
 
@@ -80,6 +80,23 @@ set_wallpaper :: proc "c" (e: ^ui.Event) {
 	utils.set_wallpaper_symlink(wallpaper_path, wallpaper_symlink_path)
 }
 
+@(private = "file")
+select_directory :: proc "c" (e: ^ui.Event) {
+	context = runtime.default_context()
+
+	command: string
+
+	when ODIN_OS == .Linux {
+		command = "zenity --file-selection --directory"
+	} else when ODIN_OS == .Darwin {
+		command = "osascript -e 'choose folder'"
+	}
+
+	_, stdout, _, _ := utils.process_exec(command)
+
+	ui.return_string(e, fmt.ctprintf("%s", stdout))
+}
+
 gui :: proc() {
 	window := ui.new_window()
 	defer ui.clean()
@@ -93,8 +110,9 @@ gui :: proc() {
 
 	ui.bind(window, "exit_app", exit_app)
 	ui.bind(window, "get_config", get_config)
-	ui.bind(window, "save_config", save_config)
 	ui.bind(window, "get_wallpapers", get_wallpapers)
+	ui.bind(window, "save_config", save_config)
+	ui.bind(window, "select_directory", select_directory)
 	ui.bind(window, "set_wallpaper", set_wallpaper)
 
 	for path in config.paths {
@@ -114,4 +132,3 @@ gui :: proc() {
 
 	ui.show_browser(window, "index.html", .AnyBrowser)
 }
-

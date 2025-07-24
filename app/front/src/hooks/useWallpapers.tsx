@@ -1,5 +1,5 @@
-import { useStateContext } from "@/context/state";
 import { useEffect, useMemo, useState } from "react";
+import { useStateContext } from "@/context/state";
 
 export const useWallpapers = () => {
 	const [allWallpapers, setAllWallpapers] = useState<string[]>([]);

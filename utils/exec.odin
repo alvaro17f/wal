@@ -3,7 +3,7 @@ package utils
 import os "core:os/os2"
 import "core:time"
 
-exec :: proc(
+process_start :: proc(
 	command: string,
 	print_stdout: bool = true,
 	print_stderr: bool = true,
@@ -28,3 +28,19 @@ exec :: proc(
 	return state, nil
 }
 
+process_exec :: proc(
+	command: string,
+) -> (
+	process_state: os.Process_State,
+	process_stdout: []byte,
+	process_stderr: []byte,
+	process_error: os.Error,
+) {
+
+	state, stdout, stderr := os.process_exec(
+		os.Process_Desc{command = []string{"sh", "-c", command}},
+		context.temp_allocator,
+	) or_return
+
+	return state, stdout, stderr, nil
+}

@@ -36,13 +36,12 @@ set_wallpaper :: proc(config: ^Config, path_: string) {
 
 		if strings.contains(command, "{}") {
 			cmd, _ = strings.replace_all(command, "{}", path, context.temp_allocator)
-			exec(cmd, false, false, 0)
+			process_start(cmd, false, false, 0)
 		} else {
 			cmd = command
-			exec(cmd, false, false)
+			process_start(cmd, false, false)
 		}
 	}
 
 	fmt.printfln("%s[wallpaper_set]%s: %s", colors.GREEN, colors.RESET, path)
 }
-
