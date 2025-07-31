@@ -19,7 +19,7 @@ help() {
   echo "-------------------"
   echo " tsk [task] [args] "
   echo "-------------------"
-  declare -F | awk '{print "◉ " $3}' | grep -v "^_" | sort
+  declare -F | awk '{print "◉ " $3}' | grep -v "◉ _" | sort
 }
 
 _build_front() {
